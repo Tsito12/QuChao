@@ -1,5 +1,8 @@
 package vista;
 
+import controlador.ControladorProximasCarreras;
+import modelo.ModeloProximasCarreras;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -100,8 +103,16 @@ public class VistaProximasCarreras extends JFrame {
         return (String) comboCarrera.getSelectedItem();
     }
 
+    public void conectaControlador(  ControladorProximasCarreras c  ){
+
+    }
+
     public static void main(String[] args)
     {
+        ModeloProximasCarreras modeloProximasCarreras = new ModeloProximasCarreras("dbautodromo");
         VistaProximasCarreras v = new VistaProximasCarreras();
+        ControladorProximasCarreras controladorProximasCarreras = new ControladorProximasCarreras(v, modeloProximasCarreras);
+        v.conectaControlador(controladorProximasCarreras);
+
     }
 }
