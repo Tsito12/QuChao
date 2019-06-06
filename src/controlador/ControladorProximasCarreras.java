@@ -18,9 +18,18 @@ public class ControladorProximasCarreras implements ActionListener {
         this.modelo=modelo;
         this.vista=vista;
         cargarTabla();
+        cargarListaCarreras();
     }
     @Override
     public void actionPerformed(ActionEvent e) {
+        String comando = e.getActionCommand();
+        switch (comando)
+        {
+            case "Salir":
+                modelo.closeConexion();
+                this.vista.dispose();
+            break;
+        }
 
     }
 
@@ -42,6 +51,14 @@ public class ControladorProximasCarreras implements ActionListener {
             fila.add(c.getFecha());
             fila.add(c.getHora());
             this.vista.dtm.addRow(fila);
+        }
+    }
+    public void cargarListaCarreras()
+    {
+        List<Carrera> carreras = modelo.listarCarreras();
+        for(int i =0; i<carreras.size();i++)
+        {
+            vista.getComboCarrera().addItem(carreras.get(i).getIdcarrera());
         }
     }
 }

@@ -99,17 +99,22 @@ public class VistaProximasCarreras extends JFrame {
         //pack();
     }
 
-    public String getComboCarrera() {
+    public String getCarreraSeleccionada() {
         return (String) comboCarrera.getSelectedItem();
+    }
+    public JComboBox getComboCarrera()
+    {
+        return comboCarrera;
     }
 
     public void conectaControlador(  ControladorProximasCarreras c  ){
-
+        btnUsuarioSalir.setActionCommand("Salir");
+        btnUsuarioSalir.addActionListener(c);
     }
 
     public static void main(String[] args)
     {
-        ModeloProximasCarreras modeloProximasCarreras = new ModeloProximasCarreras("dbautodromo");
+        ModeloProximasCarreras modeloProximasCarreras = new ModeloProximasCarreras("autodoromo");
         VistaProximasCarreras v = new VistaProximasCarreras();
         ControladorProximasCarreras controladorProximasCarreras = new ControladorProximasCarreras(v, modeloProximasCarreras);
         v.conectaControlador(controladorProximasCarreras);
