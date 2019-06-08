@@ -69,7 +69,7 @@ public class ModeloProximasCarreras {
         ResultSet rs;
         Carrera carreraEncontrada = null;
 
-        String consulta ="select id_carrera, noParticipantes, fecha, noVueltas, hora from scautodromo.carrera where id_carrera =?;";
+        String consulta ="select id_carrera, noParticipantes, fecha, noVueltas, hora from scautodromo.carrera where fecha =? and hora = ?;";
         try
         {
             ps = getConexion().prepareStatement(consulta);
@@ -121,5 +121,40 @@ public class ModeloProximasCarreras {
             System.err.println("Error mostrando todas las carreras");
         }
         return carreras;
+    }
+
+    public List<Piloto> listaPilotosPorCarrera(Carrera c)
+    {
+        PreparedStatement ps;
+        //Objeto para recoger los datos devueltos por el procedimiento almacenado
+        ResultSet rs;
+        //Objeto para recorrer el resultado del procedimiento almacenado y
+        //  añadirlo a la tabla definida en la clase View
+        List<Piloto> pilotos = new ArrayList<Piloto>();
+        String consultaSQL ="select nombre, apellidop, apellidom, apodo from scautodromo.piloto where noLicencia in (select noLicencia from resultados where id_carrera = ?;";
+        try {
+            //Preparar la llamada
+            ps  = getConexion().prepareStatement(consultaSQL);
+            ps.setInt(1,c.getIdcarrera());
+            //Ejecutarla y recoger el resultado
+            rs  = ps.executeQuery();
+
+            //Recorrer el resultado
+            while(rs.next())
+            {
+                Piloto piloto = new Piloto();
+                piloto.setnum_licencia(rs.getString("noLicencia"));
+                piloto.setnombre(rs.getString("nombre"));
+                piloto.setapellidoP(rs.getString("apellidoP"));
+                piloto.setapellidoM(rs.getString("apellidoM"));
+                piloto.setapodo(rs.getString("apodo"));
+                pilotos.add(piloto);
+            }
+        }
+        catch (SQLException e)
+        {
+            System.err.println("Error en la busqueda de ploto desde la carrera "+e.getStackTrace());
+        }
+        return pilotos;
     }
 }

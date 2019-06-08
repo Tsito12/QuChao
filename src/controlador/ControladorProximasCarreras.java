@@ -6,10 +6,12 @@ import vista.VistaProximasCarreras;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.List;
 import java.util.Vector;
 
-public class ControladorProximasCarreras implements ActionListener {
+public class ControladorProximasCarreras implements ActionListener, MouseListener {
     private VistaProximasCarreras vista;
     private ModeloProximasCarreras modelo;
 
@@ -29,6 +31,16 @@ public class ControladorProximasCarreras implements ActionListener {
                 modelo.closeConexion();
                 this.vista.dispose();
             break;
+            case "Modificar":
+                int filaPulsada = this.vista.tabla.getSelectedRow();
+                if(filaPulsada>=0)
+                {
+                    Carrera carrera = new Carrera();
+                    String fecha = (String)this.vista.dtm.getValueAt(filaPulsada,2);
+                    String hora = (String)this.vista.dtm.getValueAt(filaPulsada,3);
+                    carrera.setFecha(fecha);
+                    carrera.setFecha(fecha);
+                }
         }
 
     }
@@ -60,5 +72,37 @@ public class ControladorProximasCarreras implements ActionListener {
         {
             vista.getComboCarrera().addItem(carreras.get(i).getIdcarrera());
         }
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        //Recoger que fila se ha pulsadao en la tabla
+        int filaPulsada = this.vista.tabla.getSelectedRow();
+        //Si se ha pulsado una fila
+        if(filaPulsada>=0)
+        {
+            Carrera carrera = new Carrera();
+            String noParticipantes = (String)this.vista.dtm.getValueAt(filaPulsada,0);
+        }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
     }
 }
