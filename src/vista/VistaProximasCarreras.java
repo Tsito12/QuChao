@@ -110,6 +110,8 @@ public class VistaProximasCarreras extends JFrame {
     public void conectaControlador(  ControladorProximasCarreras c  ){
         btnUsuarioSalir.setActionCommand("Salir");
         btnUsuarioSalir.addActionListener(c);
+        btnDetalle.setActionCommand("Detalle");
+        btnDetalle.addActionListener(c);
     }
 
     public static void main(String[] args)
