@@ -149,4 +149,34 @@ public class ModeloDetalleCarrera {
         }
         return listaDeCarrerasGanadas;
     }
+
+    public Piloto selectPiloto(Piloto p)
+    {
+        //Objeto para ejecutar los procedimientos almacenados en la base de datos
+        PreparedStatement ps;
+        //Objeto para recoger los datos devueltos por el procedimiento almacenado
+        ResultSet rs;
+        Piloto pilotoEncontrado = null;
+        String consulta ="select noLicencia, nombre,apellidoP,apellidoM,apodo from scautodromo.piloto where apodo=?;";
+        try
+        {
+            ps=getConexion().prepareStatement(consulta);
+            ps.setString(1,p.getapodo());
+            rs=ps.executeQuery();
+            if(rs.next())
+            {
+                pilotoEncontrado = new Piloto();
+                pilotoEncontrado.setnum_licencia(rs.getString("noLicencia"));
+                pilotoEncontrado.setnombre(rs.getString("nombre"));
+                pilotoEncontrado.setapellidoP(rs.getString("apellidoP"));
+                pilotoEncontrado.setapellidoM(rs.getString("apellidoM"));
+                pilotoEncontrado.setapodo(rs.getString("apodo"));
+            }
+        }
+        catch (SQLException e)
+        {
+            System.err.println("Error al buscar un piloto por su apodo "+e);
+        }
+        return pilotoEncontrado;
+    }
 }

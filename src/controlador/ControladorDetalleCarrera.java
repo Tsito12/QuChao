@@ -1,9 +1,11 @@
 package controlador;
 
 import modelo.ModeloDetalleCarrera;
+import modelo.ModeloHistorialPiloto;
 import modelo.ModeloProximasCarreras;
 import modelo.Piloto;
 import vista.DetalleCarrera;
+import vista.VistaHistorialPiloto;
 import vista.VistaProximasCarreras;
 
 import java.awt.event.ActionEvent;
@@ -55,6 +57,22 @@ public class ControladorDetalleCarrera implements ActionListener {
                 ModeloProximasCarreras modeloProximasCarreras = new ModeloProximasCarreras("autodoromo");
                 ControladorProximasCarreras controladorProximasCarreras = new ControladorProximasCarreras(vistaProximasCarreras, modeloProximasCarreras);
                 vistaProximasCarreras.conectaControlador(controladorProximasCarreras);
+                break;
+            case "Historial":
+                int filaPulsada = this.vista.tabla.getSelectedRow();
+                if(filaPulsada>=0)
+                {
+                    Piloto p = new Piloto();
+                    String apodo = (String)this.vista.dtm.getValueAt(filaPulsada,3);
+                    p.setapodo(apodo);
+                    Piloto p2 = modelo.selectPiloto(p);
+                    modelo.closeConexion();
+                    this.vista.dispose();
+                    VistaHistorialPiloto vistaHistorialPiloto = new VistaHistorialPiloto(p2,this.vista.carrera);
+                    ModeloHistorialPiloto modeloHistorialPiloto = new ModeloHistorialPiloto("autodoromo");
+                    ControladorHistorialPiloto controladorHistorialPiloto = new ControladorHistorialPiloto(vistaHistorialPiloto, modeloHistorialPiloto);
+                    vistaHistorialPiloto.conectarControlador(controladorHistorialPiloto);
+                }
                 break;
         }
     }

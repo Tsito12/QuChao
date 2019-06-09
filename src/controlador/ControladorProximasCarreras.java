@@ -50,6 +50,7 @@ public class ControladorProximasCarreras implements ActionListener, MouseListene
                     ControladorDetalleCarrera controlador = new ControladorDetalleCarrera(vista,modelo);
                     vista.conectaControlador(controlador);
                 }
+                break;
         }
 
     }

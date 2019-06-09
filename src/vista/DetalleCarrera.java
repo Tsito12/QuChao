@@ -119,6 +119,8 @@ public class DetalleCarrera extends JFrame {
     {
         btnRegresar.setActionCommand("Regresar");
         btnRegresar.addActionListener(c);
+        btnHistorial.setActionCommand("Historial");
+        btnHistorial.addActionListener(c);
     }
 
 }
