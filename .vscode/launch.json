@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - VistaPiloto",
+            "request": "launch",
+            "mainClass": "vista.VistaPiloto",
+            "projectName": "QuChao_8183492c"
+        }
+    ]
+}

@@ -10,23 +10,21 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import modelo.Cliente;
-import modelo.ModeloRegistro;
-import vista.VistaRegistro;
+import modelo.ModeloInicioSesion;
+import vista.VistaInicioSesion;
 
 /**
  *
  * @author mfarf
  */
-public class ControladorRegistro implements ActionListener, MouseListener{
-    private VistaRegistro view;
-    private ModeloRegistro modelo;
+public class ControladorInicioSesion implements ActionListener, MouseListener{
+    private VistaInicioSesion view;
+    private ModeloInicioSesion modelo;
     
-    public ControladorRegistro( VistaRegistro view , ModeloRegistro modelo){
-        this.view   = view;
-	this.modelo = modelo;
+    public ControladorInicioSesion(VistaInicioSesion view, ModeloInicioSesion modelo){
+        this.view = view;
+        this.modelo = modelo;
     }
-    
-    @Override
     public void actionPerformed(ActionEvent arg0) {
         //Objeto para ejecutar los procedimientos almacenados
         //   en la base de datos
@@ -40,13 +38,12 @@ public class ControladorRegistro implements ActionListener, MouseListener{
         //  indicados en setActionCommand invocado en la
         //  clase VistaBiblioteca
         switch (comando) {
-            case "INSERTAR":
+            case "INICIAR":
                 
             break;
  
-            case "SALIR":
-                modelo.closeConexion();
-                this.view.dispose();
+            case "REGISTRAR":
+                
             break;
 			
             default:

@@ -6,9 +6,14 @@
 package vista;
 
 import controlador.ControladorRegistro;
-
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.SpringLayout;
+import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 /**
  *
@@ -58,7 +63,6 @@ public class VistaRegistro extends JFrame{
         setDefaultCloseOperation(EXIT_ON_CLOSE);    //Acción al pulsar salir
          //CREAR EL CONTENEDOR PRINCIPAL Y AÑADIRLO A LA VENTANA
         contenedor = new JPanel();
-        contenedor.setBorder(BorderFactory.createTitledBorder("Qu Chao"));
         getContentPane().add(contenedor);
  
         //USAR EL LAYOUTMANAGER SpringLayout
@@ -123,8 +127,8 @@ public class VistaRegistro extends JFrame{
                         SpringLayout.NORTH, contenedor);
         sp.putConstraint(SpringLayout.WEST, txtconfirmpass, 230,
                         SpringLayout.WEST, contenedor);
-        sp.putConstraint(SpringLayout.EAST, txtconfirmpass, 300,
-                        SpringLayout.EAST, lblpass);
+        sp.putConstraint(SpringLayout.EAST, txtconfirmpass, 200,
+                        SpringLayout.WEST, contenedor);
         
         //Cuenta Bancaria
         lblcuenta = new JLabel("Introduzca el numero de su tarjeta: ");  //Crear el objeto
@@ -175,7 +179,7 @@ public class VistaRegistro extends JFrame{
         sp.putConstraint(SpringLayout.WEST, txtdir_numero, 230,
                         SpringLayout.WEST, contenedor);
         sp.putConstraint(SpringLayout.EAST, txtdir_numero, 50,
-                        SpringLayout.WEST, lbldir_num);
+                        SpringLayout.WEST, contenedor);
         
         //Direccion colonia y cp
         lbldir_colonia = new JLabel("Colonia: ");  //Crear el objeto
@@ -208,7 +212,7 @@ public class VistaRegistro extends JFrame{
         sp.putConstraint(SpringLayout.WEST, txtcp, 230,
                         SpringLayout.WEST, contenedor);
         sp.putConstraint(SpringLayout.EAST, txtcp, 50,
-                        SpringLayout.WEST, lbldir_cp);
+                        SpringLayout.WEST, contenedor);
         
         //NOMBRE
         lblnombre = new JLabel("Nombre: ");  //Crear el objeto
@@ -256,10 +260,10 @@ public class VistaRegistro extends JFrame{
         contenedor.add(txtapellido2);
         sp.putConstraint(SpringLayout.NORTH, txtapellido2, 360,
                         SpringLayout.NORTH, contenedor);
-        sp.putConstraint(SpringLayout.WEST, txtapellido2, 230,
+        sp.putConstraint(SpringLayout.WEST, txtapellido2, 320,
                         SpringLayout.WEST, contenedor);
         sp.putConstraint(SpringLayout.EAST, txtapellido2, 200,
-                       SpringLayout.WEST, lblapellido2);
+                        SpringLayout.WEST, contenedor);
         
         //CORREO ELECTRONICO
         lblcorreo = new JLabel("Correo electronico: ");  //Crear el objeto

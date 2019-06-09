@@ -13,7 +13,7 @@ import java.sql.PreparedStatement;
  *
  * @author mfarf
  */
-public class ModeloRegistro {
+public class ModeloInicioSesion {
     private String  host     = "localhost";
     private String  usuario     = "postgres";
     private String  clave       = "Mario12";
@@ -25,7 +25,7 @@ public class ModeloRegistro {
     //CONSTRUCTOR
     //Recibe el nombre de la base de datos
 	
-    public ModeloRegistro(String baseDatos){
+    public ModeloInicioSesion(String baseDatos){
 	this.baseDatos = baseDatos;
         ConexionBd();
     }

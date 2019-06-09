@@ -15,17 +15,15 @@ public class Piloto {
     private String apellidoP;
     private String apellidoM;
     private String apodo;
-    private String num_seguro;
     
     public Piloto(){}
     
-    public Piloto(String num_licencia, String nombre, String apellidoP, String apellidoM, String apodo, String num_seguro){
+    public Piloto(String num_licencia, String nombre, String apellidoP, String apellidoM, String apodo){
         this.num_licencia = num_licencia;
         this.nombre = nombre;
         this.apellidoP = apellidoP;
         this.apellidoM = apellidoM;
         this.apodo = apodo;
-        this.num_seguro = num_seguro;
     }
     
     public void setnum_licencia (String num_licencia){
@@ -62,10 +60,4 @@ public class Piloto {
         return apodo;
     }
     
-    public void setnum_seguro (String num_seguro){
-        this.num_seguro = num_seguro;
-    }
-    public String getnum_seguro(){
-        return num_seguro;
-    }
 }

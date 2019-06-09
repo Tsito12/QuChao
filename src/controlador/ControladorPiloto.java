@@ -4,26 +4,24 @@
  * and open the template in the editor.
  */
 package controlador;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import modelo.Cliente;
-import modelo.ModeloRegistro;
-import vista.VistaRegistro;
-
+import modelo.ModeloPiloto;
+import modelo.Piloto;
+import vista.VistaPiloto;
 /**
  *
  * @author mfarf
  */
-public class ControladorRegistro implements ActionListener, MouseListener{
-    private VistaRegistro view;
-    private ModeloRegistro modelo;
+public class ControladorPiloto implements ActionListener, MouseListener{
+    private VistaPiloto view;
+    private ModeloPiloto modelo;
     
-    public ControladorRegistro( VistaRegistro view , ModeloRegistro modelo){
-        this.view   = view;
-	this.modelo = modelo;
+    public ControladorPiloto(VistaPiloto view, ModeloPiloto modelo){
+        this.view = view;
+        this.modelo = modelo;
     }
     
     @Override
@@ -31,7 +29,7 @@ public class ControladorRegistro implements ActionListener, MouseListener{
         //Objeto para ejecutar los procedimientos almacenados
         //   en la base de datos
   
-	Cliente e;
+	Piloto e;
  
         //COMANDO EJECTUADO
         String comando  = arg0.getActionCommand();
