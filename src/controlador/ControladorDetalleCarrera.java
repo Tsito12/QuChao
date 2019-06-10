@@ -1,10 +1,8 @@
 package controlador;
 
-import modelo.ModeloDetalleCarrera;
-import modelo.ModeloHistorialPiloto;
-import modelo.ModeloProximasCarreras;
-import modelo.Piloto;
+import modelo.*;
 import vista.DetalleCarrera;
+import vista.VistaApuesta;
 import vista.VistaHistorialPiloto;
 import vista.VistaProximasCarreras;
 
@@ -40,7 +38,6 @@ public class ControladorDetalleCarrera implements ActionListener {
             fila.add(piltos.get(i).getapellidoP());
             fila.add(piltos.get(i).getapellidoM());
             fila.add(piltos.get(i).getapodo());
-            fila.add(listaCarrerasGandas.get(i));
             this.vista.dtm.addRow(fila);
         }
     }
@@ -54,7 +51,7 @@ public class ControladorDetalleCarrera implements ActionListener {
                 modelo.closeConexion();
                 this.vista.dispose();
                 VistaProximasCarreras vistaProximasCarreras = new VistaProximasCarreras();
-                ModeloProximasCarreras modeloProximasCarreras = new ModeloProximasCarreras("autodoromo");
+                ModeloProximasCarreras modeloProximasCarreras = new ModeloProximasCarreras("dbautodromo");
                 ControladorProximasCarreras controladorProximasCarreras = new ControladorProximasCarreras(vistaProximasCarreras, modeloProximasCarreras);
                 vistaProximasCarreras.conectaControlador(controladorProximasCarreras);
                 break;
@@ -69,9 +66,25 @@ public class ControladorDetalleCarrera implements ActionListener {
                     modelo.closeConexion();
                     this.vista.dispose();
                     VistaHistorialPiloto vistaHistorialPiloto = new VistaHistorialPiloto(p2,this.vista.carrera);
-                    ModeloHistorialPiloto modeloHistorialPiloto = new ModeloHistorialPiloto("autodoromo");
+                    ModeloHistorialPiloto modeloHistorialPiloto = new ModeloHistorialPiloto("dbautodromo");
                     ControladorHistorialPiloto controladorHistorialPiloto = new ControladorHistorialPiloto(vistaHistorialPiloto, modeloHistorialPiloto);
                     vistaHistorialPiloto.conectarControlador(controladorHistorialPiloto);
+                }
+                break;
+            case "Apostar":
+                filaPulsada = this.vista.tabla.getSelectedRow();
+                if(filaPulsada>=0)
+                {
+                    Piloto p = new Piloto();
+                    String apodo = (String)this.vista.dtm.getValueAt(filaPulsada,3);
+                    p.setapodo(apodo);
+                    Piloto p2 = modelo.selectPiloto(p);
+                    //modelo.closeConexion();
+                    //this.vista.dispose();
+                    VistaApuesta vistaApuesta = new VistaApuesta(p2,this.vista.carrera);
+                    ModeloApuesta modeloApuesta = new ModeloApuesta("dbautodromo");
+                    ControladorApuesta controladorApuesta = new ControladorApuesta(vistaApuesta,modeloApuesta);
+                    vistaApuesta.conectarControlador(controladorApuesta);
                 }
                 break;
         }

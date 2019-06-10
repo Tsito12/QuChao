@@ -96,7 +96,7 @@ public class ModeloProximasCarreras {
 
 
         //Cargar datos de todos las carreras
-        String consultaSQL = "select id_carrera, noParticipantes, fecha, noVueltas, hora from scautodromo.carrera;";
+        String consultaSQL = "select id_carrera,noParticipantes,fecha,noVueltas,hora from scautodromo.carrera where id_carrera in (select id_carrera from scautodromo.resultados where posicion is null);";
         List<Carrera> carreras = new ArrayList<Carrera>();
         try {
             //Preparar la llamada
@@ -118,7 +118,7 @@ public class ModeloProximasCarreras {
             }
         }catch (SQLException e)
         {
-            System.err.println("Error mostrando todas las carreras");
+            System.err.println("Error mostrando todas las carreras"+e);
         }
         return carreras;
     }

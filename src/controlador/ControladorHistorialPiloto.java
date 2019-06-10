@@ -80,7 +80,7 @@ public class ControladorHistorialPiloto implements ActionListener, MouseListener
                 modelo.closeConexion();
                 this.vista.dispose();
                 DetalleCarrera detalleCarrera = new DetalleCarrera(this.vista.getCarrera());
-                ModeloDetalleCarrera modeloDetalleCarrera = new ModeloDetalleCarrera("autodoromo");
+                ModeloDetalleCarrera modeloDetalleCarrera = new ModeloDetalleCarrera("dbautodromo");
                 ControladorDetalleCarrera controladorDetalleCarrera = new ControladorDetalleCarrera(detalleCarrera,modeloDetalleCarrera);
                 detalleCarrera.conectaControlador(controladorDetalleCarrera);
                 break;

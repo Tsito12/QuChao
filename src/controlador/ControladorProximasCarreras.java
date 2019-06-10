@@ -46,7 +46,7 @@ public class ControladorProximasCarreras implements ActionListener, MouseListene
                     modelo.closeConexion();
                     this.vista.dispose();
                     DetalleCarrera vista = new DetalleCarrera(carrera2);
-                    ModeloDetalleCarrera modelo = new ModeloDetalleCarrera("autodoromo");
+                    ModeloDetalleCarrera modelo = new ModeloDetalleCarrera("dbautodromo");
                     ControladorDetalleCarrera controlador = new ControladorDetalleCarrera(vista,modelo);
                     vista.conectaControlador(controlador);
                 }

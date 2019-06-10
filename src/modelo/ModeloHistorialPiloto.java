@@ -67,7 +67,7 @@ public class ModeloHistorialPiloto {
         String noLicencia = p.getnum_licencia();
         //Cargar datos de todos las carreras
         String consultaSQL = "select id_carrera, noVueltas, noParticipantes, fecha, hora from scautodromo.carrera natural join scautodromo.resultados" +
-                             " where  noLicencia ='"+noLicencia+"' order by id_carrera;";
+                             " where  noLicencia ='"+noLicencia+"' and posicion is not null order by id_carrera;";
         List<Carrera> listaDeCarreras= new ArrayList<>();
 
         try {
@@ -120,8 +120,10 @@ public class ModeloHistorialPiloto {
             //Recorrer el resultado
             while(rs.next())
             {
-                Integer posicion = rs.getInt("posicion");
-                listaPosiciones.add(posicion);
+                if (rs.getInt("posicion")!=0) {
+                    Integer posicion = rs.getInt("posicion");
+                    listaPosiciones.add(posicion);
+                }
             }
         }
         catch (SQLException e)
