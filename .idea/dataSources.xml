@@ -7,5 +7,11 @@
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://localhost:5432/autodoromo</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="dbautodromo@localhost" uuid="e6fac2ae-5cb4-4e76-899f-a64c38ddaf9f">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/dbautodromo</jdbc-url>
+    </data-source>
   </component>
 </project>

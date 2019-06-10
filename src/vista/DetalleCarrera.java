@@ -68,7 +68,7 @@ public class DetalleCarrera extends JFrame {
 
         //Panel de la tabla y tabla
         scroll      = new JScrollPane();
-        cabecera    = new String[] {"Nombre","Apellido Paterno","Apellido Materno","Apodo","Carreras Ganadas"};
+        cabecera    = new String[] {"Nombre","Apellido Paterno","Apellido Materno","Apodo"};
         dtm         = new DefaultTableModel(datos,cabecera);
         tabla       = new JTable(dtm);
         scroll.setViewportView(tabla);
@@ -121,6 +121,8 @@ public class DetalleCarrera extends JFrame {
         btnRegresar.addActionListener(c);
         btnHistorial.setActionCommand("Historial");
         btnHistorial.addActionListener(c);
+        btnApostar.setActionCommand("Apostar");
+        btnApostar.addActionListener(c);
     }
 
 }

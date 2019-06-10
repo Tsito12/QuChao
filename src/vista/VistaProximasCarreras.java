@@ -116,7 +116,7 @@ public class VistaProximasCarreras extends JFrame {
 
     public static void main(String[] args)
     {
-        ModeloProximasCarreras modeloProximasCarreras = new ModeloProximasCarreras("autodoromo");
+        ModeloProximasCarreras modeloProximasCarreras = new ModeloProximasCarreras("dbautodromo");
         VistaProximasCarreras v = new VistaProximasCarreras();
         ControladorProximasCarreras controladorProximasCarreras = new ControladorProximasCarreras(v, modeloProximasCarreras);
         v.conectaControlador(controladorProximasCarreras);
