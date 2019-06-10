@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - VistaApuesta",
+            "request": "launch",
+            "mainClass": "vista.VistaApuesta",
+            "projectName": "QuChao_8183492c"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - VistaPiloto",
             "request": "launch",
             "mainClass": "vista.VistaPiloto",

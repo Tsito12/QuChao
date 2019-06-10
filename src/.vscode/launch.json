@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - VistaRegistro",
+            "request": "launch",
+            "mainClass": "vista.VistaRegistro",
+            "projectName": "src_f39ee81"
+        }
+    ]
+}
