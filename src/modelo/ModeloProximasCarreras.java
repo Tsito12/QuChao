@@ -68,12 +68,12 @@ public class ModeloProximasCarreras {
         //Objeto para recoger los datos devueltos por el procedimiento almacenado
         ResultSet rs;
         Carrera carreraEncontrada = null;
-
-        String consulta ="select id_carrera, noParticipantes, fecha, noVueltas, hora from scautodromo.carrera where fecha =? and hora = ?;";
+        String fechac = c.getFecha();
+        String horac = c.getHora();
+        String consulta ="select id_carrera, noParticipantes, fecha, noVueltas, hora from scautodromo.carrera where fecha ='"+fechac+"' and hora='"+horac+"';";
         try
         {
             ps = getConexion().prepareStatement(consulta);
-            ps.setInt(1,c.getIdcarrera());
             rs = ps.executeQuery();
             if(rs.next())
             {
@@ -95,7 +95,7 @@ public class ModeloProximasCarreras {
         //  añadirlo a la tabla definida en la clase View
 
 
-        //Cargar datos de todos los estudiantes
+        //Cargar datos de todos las carreras
         String consultaSQL = "select id_carrera, noParticipantes, fecha, noVueltas, hora from scautodromo.carrera;";
         List<Carrera> carreras = new ArrayList<Carrera>();
         try {

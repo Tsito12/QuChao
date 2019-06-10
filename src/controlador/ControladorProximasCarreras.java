@@ -1,7 +1,9 @@
 package controlador;
 
 import modelo.Carrera;
+import modelo.ModeloDetalleCarrera;
 import modelo.ModeloProximasCarreras;
+import vista.DetalleCarrera;
 import vista.VistaProximasCarreras;
 
 import java.awt.event.ActionEvent;
@@ -31,7 +33,7 @@ public class ControladorProximasCarreras implements ActionListener, MouseListene
                 modelo.closeConexion();
                 this.vista.dispose();
             break;
-            case "Modificar":
+            case "Detalle":
                 int filaPulsada = this.vista.tabla.getSelectedRow();
                 if(filaPulsada>=0)
                 {
@@ -39,8 +41,16 @@ public class ControladorProximasCarreras implements ActionListener, MouseListene
                     String fecha = (String)this.vista.dtm.getValueAt(filaPulsada,2);
                     String hora = (String)this.vista.dtm.getValueAt(filaPulsada,3);
                     carrera.setFecha(fecha);
-                    carrera.setFecha(fecha);
+                    carrera.setHora(hora);
+                    Carrera carrera2 = this.modelo.selectCarrera(carrera);
+                    modelo.closeConexion();
+                    this.vista.dispose();
+                    DetalleCarrera vista = new DetalleCarrera(carrera2);
+                    ModeloDetalleCarrera modelo = new ModeloDetalleCarrera("autodoromo");
+                    ControladorDetalleCarrera controlador = new ControladorDetalleCarrera(vista,modelo);
+                    vista.conectaControlador(controlador);
                 }
+                break;
         }
 
     }
