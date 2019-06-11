@@ -53,23 +53,25 @@ public class VistaCarrera extends JFrame{
             lugarX+=25;
             lugarY-=25;
             coche.setBounds(lugarX,lugarY,50,50);
-            Carrito hilo = new Carrito(coche,new Random());
+            Carrito hilo = new Carrito(coche,new Random(),carrera.getNoVueltas());
             hilos.add(hilo);
         }
     }
 
     public void gottaGoFast()
     {
+        List<Integer> tiempos;
         for(int i =0;i<hilos.size();i++)
         {
             hilos.get(i).start();
         }
+    }
+
+    public void verTiempos()
+    {
         for(int i =0;i<hilos.size();i++)
         {
-            if(!hilos.get(i).isAlive())
-            {
-                System.out.println("Ganó"+hilos.get(i).getCarro());
-            }
+            System.out.println(hilos.get(i).getTiempo());
         }
     }
 

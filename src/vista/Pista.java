@@ -52,8 +52,8 @@ public class Pista extends JFrame {
     public void correr() {
         Random random1 = new Random();
         Random random2 = new Random();
-        hilo = new Carrito(this.carrito,random1);
-        Carrito carro2 = new Carrito(this.carrito2,random2);
+        hilo = new Carrito(this.carrito,random1,1);
+        Carrito carro2 = new Carrito(this.carrito2,random2,1);
         hilo.start();
         carro2.start();
         while (hilo.isAlive()&&carro2.isAlive())

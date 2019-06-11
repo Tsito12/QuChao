@@ -1,6 +1,5 @@
 package vista;
 
-import controlador.Carrito;
 import modelo.Piloto;
 
 import javax.swing.*;
@@ -17,7 +16,7 @@ public class Coches extends JLabel {
     {
         this.piloto=piloto;
         this.numeroDesalida=numeroDesalida;
-        String path = "/imagenes/runner3.png";
+        String path = "/imagenes/sanic2.png";
         URL url1 = this.getClass().getResource(path);
         Image image2 = new ImageIcon(url1).getImage();
         ImageIcon icon2 = new ImageIcon(image2.getScaledInstance(50,50,Image.SCALE_SMOOTH));

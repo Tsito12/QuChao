@@ -11,22 +11,28 @@ public class Carrito extends Thread{
     private int yInicial;
     private int xAvance;
     private int yAvance;
+    private int noVueltas;
     private Random random;
-    public Carrito(JLabel carro, Random random)
+    private long tiempo;
+    public Carrito(JLabel carro, Random random, int noVueltas)
     {
         this.carro=carro;
         xInicial = carro.getX();
         yInicial = carro.getY();
         this.random=random;
+        this.noVueltas=noVueltas;
+        tiempo=0;
     }
     @Override
     public void run() {
-        avanzarDerecha();
-        bajarDerecha();
-        bajarIzquierda();
-        avanzarIzquierda();
-        subirIzquierda();
-        subirDerecha();
+        for (int i =0; i<noVueltas;i++) {
+            avanzarDerecha();
+            bajarDerecha();
+            bajarIzquierda();
+            avanzarIzquierda();
+            subirIzquierda();
+            subirDerecha();
+        }
     }
 
     public void avanzarDerecha()
@@ -36,7 +42,9 @@ public class Carrito extends Thread{
             try
             {
                 carro.setBounds(xAvance,yInicial,50,50);
-                sleep((long)random.nextInt(50));
+                long dormir = random.nextInt(50);
+                tiempo+=dormir;
+                sleep(dormir);
             }
             catch (InterruptedException e)
             {
@@ -53,7 +61,9 @@ public class Carrito extends Thread{
             try
             {
                 carro.setBounds(xAvance++, yAvance,50,50);
-                sleep((long)random.nextInt(50));
+                long dormir = random.nextInt(50);
+                tiempo+=dormir;
+                sleep(dormir);
             }
             catch (InterruptedException e)
             {
@@ -70,7 +80,9 @@ public class Carrito extends Thread{
             try
             {
                 carro.setBounds(xAvance--, yAvance,50,50);
-                sleep((long)random.nextInt(50));
+                long dormir = random.nextInt(50);
+                tiempo+=dormir;
+                sleep(dormir);
             }
             catch (InterruptedException e)
             {
@@ -85,7 +97,9 @@ public class Carrito extends Thread{
             try
             {
                 carro.setBounds(xAvance,yAvance,50,50);
-                sleep((long)random.nextInt(50));
+                long dormir = random.nextInt(50);
+                tiempo+=dormir;
+                sleep(dormir);
             }
             catch (InterruptedException e)
             {
@@ -101,8 +115,9 @@ public class Carrito extends Thread{
             try
             {
                 carro.setBounds(xAvance--, yAvance,50,50);
-                long tiempo = (long)random.nextInt(50);
-                //System.out.println(tiempo);
+                long dormir = random.nextInt(50);
+                tiempo+=dormir;
+                sleep(dormir);
                 sleep(tiempo);
             }
             catch (InterruptedException e)
@@ -119,7 +134,9 @@ public class Carrito extends Thread{
             try
             {
                 carro.setBounds(xAvance++, yAvance,50,50);
-                sleep((long)random.nextInt(50));
+                long dormir = random.nextInt(50);
+                tiempo+=dormir;
+                sleep(dormir);
             }
             catch (InterruptedException e)
             {
@@ -130,5 +147,9 @@ public class Carrito extends Thread{
     public JLabel getCarro()
     {
         return carro;
+    }
+
+    public long getTiempo() {
+        return tiempo;
     }
 }
