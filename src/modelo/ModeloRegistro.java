@@ -16,7 +16,7 @@ import java.sql.PreparedStatement;
 public class ModeloRegistro {
     private String  host     = "localhost";
     private String  usuario     = "postgres";
-    private String  clave       = "Mario12";
+    private String  clave       = "0987654321";
     private int     puerto      = 5432;
     private String  servidor    = "";
     private String  baseDatos;
@@ -56,6 +56,34 @@ public class ModeloRegistro {
         return conexion;
     }
     
+    public boolean insertCliente(Cliente e){
+        //Objeto para ejecutar los procedimientos almacenados en la base de datos
+        PreparedStatement ps;
+	    String sqlInsertLibro = "insert into scautodromo.cliente values (?,?,?,?,?,?,?,?,?,?,?);";
+        try{
+            //Preparar la llamada
+            ps  = getConexion().prepareStatement(sqlInsertLibro);
+            //Indicar qué información se pasa al Statement
+            ps.setString(1, e.getUsername());
+            ps.setString(2, e.getCuenta());
+            ps.setString(3,e.getPass());
+            ps.setString(4,e.getNombre_nombre());
+            ps.setString(5, e.getNombre_apellidoP());
+            ps.setString(6, e.getNombre_apellidoM());
+            ps.setString(7, e.getDir_cp());
+            ps.setString(8, e.getDir_calle());
+            ps.setString(9, e.getDir_num());
+            ps.setString(10, e.getDir_colonia());
+            ps.setString(11, e.getCorreo());
+            
+            //Ejecutar el comando insert
+            ps.executeUpdate();
+	return true;
+        }catch (SQLException exception) {
+            System.err.println("Error en la INSERCIÓN " + exception );
+			return false;
+        }
+    }
     public void closeConexion(){
 	if ( getConexion() != null){
             try {

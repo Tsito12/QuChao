@@ -66,7 +66,7 @@ public class Pista extends JFrame {
         }
         else
             {
-                System.out.println("hilo Ganó");
+                System.out.println("hilo 1 Ganó");
             }
     }
 

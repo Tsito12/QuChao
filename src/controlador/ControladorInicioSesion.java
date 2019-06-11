@@ -9,9 +9,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import modelo.Cliente;
 import modelo.ModeloInicioSesion;
+import modelo.ModeloProximasCarreras;
+import modelo.ModeloRegistro;
 import vista.VistaInicioSesion;
+import vista.VistaProximasCarreras;
+import vista.VistaRegistro;
 
 /**
  *
@@ -33,17 +39,37 @@ public class ControladorInicioSesion implements ActionListener, MouseListener{
  
         //COMANDO EJECTUADO
         String comando  = arg0.getActionCommand();
- 
+        ArrayList<Cliente> list;
         //Deberá coincidir con alguno de los parámetros
         //  indicados en setActionCommand invocado en la
         //  clase VistaBiblioteca
         switch (comando) {
             case "INICIAR":
+                String pss = view.getpass();
+                String us = view.getusername();
+                list = modelo.login(us, pss);
+                if (list.size()>0){
+                    view.dispose();
+                    Cliente cliente = list.get(0);
+                    this.modelo.closeConexion();
+                    VistaProximasCarreras v= new VistaProximasCarreras(cliente);
+                    ModeloProximasCarreras modeloProximasCarreras = new ModeloProximasCarreras("dbautodromo");
+                    ControladorProximasCarreras controladorProximasCarreras = new ControladorProximasCarreras(v,modeloProximasCarreras);
+                    v.conectaControlador(controladorProximasCarreras);
+                }else {
+                    JOptionPane.showMessageDialog(null,"Usuario o Contraseña invalidos","Error",JOptionPane.ERROR_MESSAGE);
+                }
                 
             break;
  
             case "REGISTRAR":
-                
+                view.dispose();
+                this.modelo.closeConexion();
+                VistaRegistro vr = new VistaRegistro();
+                ModeloRegistro modeloRegistro = new ModeloRegistro("dbautodromo");
+                ControladorRegistro controladorRegistro = new ControladorRegistro(vr,modeloRegistro);
+                vr.conectaControlador(controladorRegistro);
+                vr.setVisible(true);
             break;
 			
             default:

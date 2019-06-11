@@ -50,7 +50,7 @@ public class ControladorDetalleCarrera implements ActionListener {
             case "Regresar":
                 modelo.closeConexion();
                 this.vista.dispose();
-                VistaProximasCarreras vistaProximasCarreras = new VistaProximasCarreras();
+                VistaProximasCarreras vistaProximasCarreras = new VistaProximasCarreras(this.vista.cliente);
                 ModeloProximasCarreras modeloProximasCarreras = new ModeloProximasCarreras("dbautodromo");
                 ControladorProximasCarreras controladorProximasCarreras = new ControladorProximasCarreras(vistaProximasCarreras, modeloProximasCarreras);
                 vistaProximasCarreras.conectaControlador(controladorProximasCarreras);
@@ -65,7 +65,7 @@ public class ControladorDetalleCarrera implements ActionListener {
                     Piloto p2 = modelo.selectPiloto(p);
                     modelo.closeConexion();
                     this.vista.dispose();
-                    VistaHistorialPiloto vistaHistorialPiloto = new VistaHistorialPiloto(p2,this.vista.carrera);
+                    VistaHistorialPiloto vistaHistorialPiloto = new VistaHistorialPiloto(p2,this.vista.carrera,this.vista.cliente);
                     ModeloHistorialPiloto modeloHistorialPiloto = new ModeloHistorialPiloto("dbautodromo");
                     ControladorHistorialPiloto controladorHistorialPiloto = new ControladorHistorialPiloto(vistaHistorialPiloto, modeloHistorialPiloto);
                     vistaHistorialPiloto.conectarControlador(controladorHistorialPiloto);
@@ -81,7 +81,7 @@ public class ControladorDetalleCarrera implements ActionListener {
                     Piloto p2 = modelo.selectPiloto(p);
                     //modelo.closeConexion();
                     //this.vista.dispose();
-                    VistaApuesta vistaApuesta = new VistaApuesta(p2,this.vista.carrera);
+                    VistaApuesta vistaApuesta = new VistaApuesta(p2,this.vista.carrera,this.vista.cliente);
                     ModeloApuesta modeloApuesta = new ModeloApuesta("dbautodromo");
                     ControladorApuesta controladorApuesta = new ControladorApuesta(vistaApuesta,modeloApuesta);
                     vistaApuesta.conectarControlador(controladorApuesta);

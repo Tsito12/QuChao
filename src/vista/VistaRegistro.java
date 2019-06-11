@@ -6,13 +6,9 @@
 package vista;
 
 import controlador.ControladorRegistro;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-import javax.swing.SpringLayout;
+
+import javax.swing.*;
+
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 /**
@@ -122,13 +118,14 @@ public class VistaRegistro extends JFrame{
         //txt Confirmar contraseña
         txtconfirmpass       = new JPasswordField();
         txtconfirmpass.setToolTipText("Confirme su Contraseña");
+        
         contenedor.add(txtconfirmpass);
         sp.putConstraint(SpringLayout.NORTH, txtconfirmpass, 110,
                         SpringLayout.NORTH, contenedor);
         sp.putConstraint(SpringLayout.WEST, txtconfirmpass, 230,
                         SpringLayout.WEST, contenedor);
         sp.putConstraint(SpringLayout.EAST, txtconfirmpass, 200,
-                        SpringLayout.WEST, contenedor);
+                        SpringLayout.EAST, contenedor);
         
         //Cuenta Bancaria
         lblcuenta = new JLabel("Introduzca el numero de su tarjeta: ");  //Crear el objeto
@@ -179,7 +176,7 @@ public class VistaRegistro extends JFrame{
         sp.putConstraint(SpringLayout.WEST, txtdir_numero, 230,
                         SpringLayout.WEST, contenedor);
         sp.putConstraint(SpringLayout.EAST, txtdir_numero, 50,
-                        SpringLayout.WEST, contenedor);
+                        SpringLayout.EAST, contenedor);
         
         //Direccion colonia y cp
         lbldir_colonia = new JLabel("Colonia: ");  //Crear el objeto
@@ -212,7 +209,7 @@ public class VistaRegistro extends JFrame{
         sp.putConstraint(SpringLayout.WEST, txtcp, 230,
                         SpringLayout.WEST, contenedor);
         sp.putConstraint(SpringLayout.EAST, txtcp, 50,
-                        SpringLayout.WEST, contenedor);
+                        SpringLayout.EAST, contenedor);
         
         //NOMBRE
         lblnombre = new JLabel("Nombre: ");  //Crear el objeto
@@ -260,10 +257,10 @@ public class VistaRegistro extends JFrame{
         contenedor.add(txtapellido2);
         sp.putConstraint(SpringLayout.NORTH, txtapellido2, 360,
                         SpringLayout.NORTH, contenedor);
-        sp.putConstraint(SpringLayout.WEST, txtapellido2, 320,
+        sp.putConstraint(SpringLayout.WEST, txtapellido2, 230,
                         SpringLayout.WEST, contenedor);
         sp.putConstraint(SpringLayout.EAST, txtapellido2, 200,
-                        SpringLayout.WEST, contenedor);
+                        SpringLayout.EAST, contenedor);
         
         //CORREO ELECTRONICO
         lblcorreo = new JLabel("Correo electronico: ");  //Crear el objeto
@@ -314,17 +311,46 @@ public class VistaRegistro extends JFrame{
     public String getTxtconfirmpass(){
         return txtconfirmpass.getText();
     }
-    public String  getTxtcuenta(){
+    public String getTxtcuenta(){
         return cuenta.getText();
+    }
+    public String getTxtcalle(){
+        return txtdir_calle.getText();
+    }
+    public String getTxtnumero(){
+        return txtdir_numero.getText();
+    }
+    public String getTxtcolonia(){
+        return txtdir_colonia.getText();
+    }
+    public String getTxtcp(){
+        return txtcp.getText();
+    }
+    public String getTxtnombre(){
+        return txtnombre.getText();
+    }
+    public String getTxtapellidoP(){
+        return txtapellido1.getText();
+    }
+    public String getTxtapellidoM(){
+        return txtapellido2.getText();
+    }
+    public String getTxtcorreo(){
+        return txtcorreo.getText();
     }
     
     public void conectaControlador(  ControladorRegistro c  ){
  
         bntregistrar.addActionListener(c);
-        bntregistrar.setActionCommand("REGISTRAR");
+        bntregistrar.setActionCommand("INSERTAR");
         
         btnExit.addActionListener(c);
         btnExit.setActionCommand("SALIR");
+    }
+
+    public void registroCompleto()
+    {
+        JOptionPane.showMessageDialog(this, "Registro Completado");
     }
     
     public static void main (String [] args){

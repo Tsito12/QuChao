@@ -2,6 +2,7 @@ package vista;
 
 import controlador.ControladorHistorialPiloto;
 import modelo.Carrera;
+import modelo.Cliente;
 import modelo.Piloto;
 
 import javax.swing.*;
@@ -11,6 +12,7 @@ import java.awt.*;
 public class VistaHistorialPiloto extends JFrame {
     //Clase de la que sacaremos la informacion
     private Piloto piloto;
+    public Cliente cliente;
     //Clase que usaremos para dar informacion a la pantalla anterior
     private Carrera carrera;
     //Panel principal
@@ -35,15 +37,17 @@ public class VistaHistorialPiloto extends JFrame {
     protected String [] cabeceraParticipantes;
     protected Object [][] datosParticipantes;
 
-    public VistaHistorialPiloto(Piloto p,Carrera carrera)
+    public VistaHistorialPiloto(Piloto p,Carrera carrera,Cliente cliente)
     {
         this.piloto = p;
+        this.cliente=cliente;
         this.carrera=carrera;
         //Metodos de JFrame
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("Detalle carrera");
         setBounds(100, 100,650,650);
         contenedor = new JPanel();
+        contenedor.setBackground(Color.PINK);
         GridBagLayout gb = new GridBagLayout();
         GridBagConstraints constraints = new GridBagConstraints();
         getContentPane().add(contenedor);
@@ -81,6 +85,7 @@ public class VistaHistorialPiloto extends JFrame {
         cabeceraCarrera    = new String[] {"Fecha","Hora","Número de vueltas","Número de Participantes","Resultado final"};
         dtmCarrea          = new DefaultTableModel(datosCarrera,cabeceraCarrera);
         tablaCarrera       = new JTable(dtmCarrea);
+        tablaCarrera.setBackground(Color.PINK);
         scrollCarrera.setViewportView(tablaCarrera);
         constraints.gridx=0;
         constraints.gridy=2;
@@ -97,6 +102,7 @@ public class VistaHistorialPiloto extends JFrame {
         cabeceraParticipantes    = new String[] {"Apodo"};
         dtmParticipantes         = new DefaultTableModel(datosParticipantes,cabeceraParticipantes);
         tablaParticipantes       = new JTable(dtmParticipantes);
+        tablaParticipantes.setBackground(Color.PINK);
         scrollParticipantes.setViewportView(tablaParticipantes);
         constraints.gridx=1;
         constraints.gridy=2;

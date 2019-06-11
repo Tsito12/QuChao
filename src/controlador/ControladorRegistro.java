@@ -10,7 +10,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import modelo.Cliente;
+import modelo.ModeloProximasCarreras;
 import modelo.ModeloRegistro;
+import vista.VistaProximasCarreras;
 import vista.VistaRegistro;
 
 /**
@@ -41,6 +43,16 @@ public class ControladorRegistro implements ActionListener, MouseListener{
         //  clase VistaBiblioteca
         switch (comando) {
             case "INSERTAR":
+                e = new Cliente(view.getTxtusername(), view.getTxtpass(),view.getTxtcuenta(),view.getTxtcorreo(),view.getTxtcolonia(),view.getTxtcalle(),
+                view.getTxtnumero(),view.getTxtcp(), view.getTxtnombre(), view.getTxtapellidoP(), view.getTxtapellidoM());
+                modelo.insertCliente(e);
+                view.registroCompleto();
+                this.modelo.closeConexion();
+                this.view.dispose();
+                VistaProximasCarreras vistaProximasCarreras = new VistaProximasCarreras(e);
+                ModeloProximasCarreras modeloProximasCarreras = new ModeloProximasCarreras("dbautodromo");
+                ControladorProximasCarreras controladorProximasCarreras = new ControladorProximasCarreras(vistaProximasCarreras,modeloProximasCarreras);
+                vistaProximasCarreras.conectaControlador(controladorProximasCarreras);
                 
             break;
  

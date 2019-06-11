@@ -2,8 +2,10 @@ package controlador;
 
 import modelo.Carrera;
 import modelo.ModeloDetalleCarrera;
+import modelo.ModeloInicioSesion;
 import modelo.ModeloProximasCarreras;
 import vista.DetalleCarrera;
+import vista.VistaInicioSesion;
 import vista.VistaProximasCarreras;
 
 import java.awt.event.ActionEvent;
@@ -32,6 +34,10 @@ public class ControladorProximasCarreras implements ActionListener, MouseListene
             case "Salir":
                 modelo.closeConexion();
                 this.vista.dispose();
+                //VistaInicioSesion vistaInicioSesion = new VistaInicioSesion();
+                //ModeloInicioSesion modeloInicioSesion = new ModeloInicioSesion("dbautodromo");
+                //ControladorInicioSesion controladorInicioSesion = new ControladorInicioSesion(vistaInicioSesion,modeloInicioSesion);
+                //vistaInicioSesion.conectaControlador(controladorInicioSesion);
             break;
             case "Detalle":
                 int filaPulsada = this.vista.tabla.getSelectedRow();
@@ -45,7 +51,7 @@ public class ControladorProximasCarreras implements ActionListener, MouseListene
                     Carrera carrera2 = this.modelo.selectCarrera(carrera);
                     modelo.closeConexion();
                     this.vista.dispose();
-                    DetalleCarrera vista = new DetalleCarrera(carrera2);
+                    DetalleCarrera vista = new DetalleCarrera(carrera2, this.vista.cliente);
                     ModeloDetalleCarrera modelo = new ModeloDetalleCarrera("dbautodromo");
                     ControladorDetalleCarrera controlador = new ControladorDetalleCarrera(vista,modelo);
                     vista.conectaControlador(controlador);

@@ -1,18 +1,20 @@
 package vista;
 
 import controlador.ControladorProximasCarreras;
-import modelo.ModeloProximasCarreras;
+import modelo.Cliente;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 
 public class VistaProximasCarreras extends JFrame {
+    public Cliente cliente;
     //Contenedor principal
     private JPanel contenedor;
     //ETIQUETAS
     private JLabel titulo;
     //BOTONES
-    private JButton btnUsuario;
+    private JLabel lblUsuario;
     private JButton btnUsuarioSalir;
     private JButton btnDetalle;
     //TABLA
@@ -24,21 +26,23 @@ public class VistaProximasCarreras extends JFrame {
     //COMBO BOX
     private JComboBox comboCarrera;
 
-    public VistaProximasCarreras()
+    public VistaProximasCarreras(Cliente cliente)
     {
+        this.cliente=cliente;
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("Proximas Carreras");
         setBounds(100, 100,650,400);
         contenedor = new JPanel();
+        contenedor.setBackground(Color.PINK);
         SpringLayout sp = new SpringLayout();
         getContentPane().add(contenedor);
         contenedor.setLayout(sp);
 
         //Botones del usuario
-        btnUsuario = new JButton("Usuario");
-        contenedor.add(btnUsuario);
-        sp.putConstraint(SpringLayout.NORTH, btnUsuario,10,SpringLayout.NORTH,contenedor);
-        sp.putConstraint(SpringLayout.EAST,btnUsuario,-100,SpringLayout.EAST,contenedor);
+        lblUsuario = new JLabel("Bienvenido, "+cliente.getUsername());
+        contenedor.add(lblUsuario);
+        sp.putConstraint(SpringLayout.NORTH, lblUsuario,10,SpringLayout.NORTH,contenedor);
+        sp.putConstraint(SpringLayout.EAST, lblUsuario,-100,SpringLayout.EAST,contenedor);
 
         btnUsuarioSalir = new JButton("Salir");
         contenedor.add(btnUsuarioSalir);
@@ -70,6 +74,7 @@ public class VistaProximasCarreras extends JFrame {
         cabecera    = new String[] {"Número de paricipantes","Numero de vueltas","Fecha","Hora"};
         dtm         = new DefaultTableModel(datos,cabecera);
         tabla       = new JTable(dtm);
+        tabla.setBackground(Color.PINK);
         scroll.setViewportView(tabla);
         // scrollpane...
         contenedor.add(scroll); //añadir al contenedor
@@ -113,7 +118,7 @@ public class VistaProximasCarreras extends JFrame {
         btnDetalle.setActionCommand("Detalle");
         btnDetalle.addActionListener(c);
     }
-
+/*
     public static void main(String[] args)
     {
         ModeloProximasCarreras modeloProximasCarreras = new ModeloProximasCarreras("dbautodromo");
@@ -121,5 +126,5 @@ public class VistaProximasCarreras extends JFrame {
         ControladorProximasCarreras controladorProximasCarreras = new ControladorProximasCarreras(v, modeloProximasCarreras);
         v.conectaControlador(controladorProximasCarreras);
 
-    }
+    }*/
 }

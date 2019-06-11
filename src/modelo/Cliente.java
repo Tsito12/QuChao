@@ -23,12 +23,11 @@ public class Cliente {
         private String nombre_apellidoP;
         private String nombre_apellidoM;
         
-        public Cliente(String username, String pass, String cuenta, String telefono, String correo, String dir_colonia, 
+        public Cliente(String username, String pass, String cuenta, String correo, String dir_colonia,
                 String dir_calle, String dir_num, String dir_cp, String nombre_nombre, String nombre_apellidoP, String nombre_apellidoM){
             this.username = username;
             this.pass = pass;
             this.cuenta = cuenta;
-            this.telefono = telefono;
             this.correo = correo;
             this.dir_colonia = dir_colonia;
             this.dir_calle = dir_calle;

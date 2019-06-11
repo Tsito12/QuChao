@@ -127,4 +127,8 @@ public class Carrito extends Thread{
             }
         }
     }
+    public JLabel getCarro()
+    {
+        return carro;
+    }
 }

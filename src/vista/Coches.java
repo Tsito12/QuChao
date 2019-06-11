@@ -24,8 +24,13 @@ public class Coches extends JLabel {
         carrito = new JLabel();
         carrito.setIcon(icon2);
         setPreferredSize(new Dimension(50, 50));
-        setLayout(null);
-        add(carrito);
-        carrito.setBounds(50+numeroDesalida*5, 50+numeroDesalida*5, 50, 50);
+        setText(piloto.getapodo());
+        //setLayout(null);
+        //add(carrito);
+        //carrito.setBounds(50+numeroDesalida*5, 50+numeroDesalida*5, 50, 50);
+    }
+
+    public Piloto getPiloto() {
+        return piloto;
     }
 }

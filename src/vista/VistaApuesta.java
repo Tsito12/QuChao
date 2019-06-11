@@ -2,12 +2,14 @@ package vista;
 
 import controlador.ControladorApuesta;
 import modelo.Carrera;
+import modelo.Cliente;
 import modelo.Piloto;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class VistaApuesta extends JDialog {
+    public Cliente cliente;
     private Piloto piloto;
     private Carrera carrera;
     private JPanel contenedor;
@@ -18,13 +20,15 @@ public class VistaApuesta extends JDialog {
     private JButton btnCancelar;
     private JButton btnOK;
 
-    public VistaApuesta(Piloto piloto, Carrera carrera)
+    public VistaApuesta(Piloto piloto, Carrera carrera, Cliente cliente)
     {
         this.piloto=piloto;
+        this.cliente=cliente;
         this.carrera=carrera;
         //Panel principal
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         contenedor = new JPanel();
+        contenedor.setBackground(Color.PINK);
         getContentPane().add(contenedor);
         SpringLayout sp = new SpringLayout();
         contenedor.setLayout(sp);

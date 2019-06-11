@@ -14,14 +14,18 @@ import vista.VistaRegistro;
  * @author mfarf
  */
 public class RegistroPrincipal {
-    public static void main(String[] args) {
+    public RegistroPrincipal(){
         //Invocar al constructor de la clase Bd
         ModeloRegistro modelo = new ModeloRegistro("dbautodromo");
         //Crear un objeto de la clase View
         VistaRegistro vista  = new VistaRegistro();
+        vista.setVisible(true);
         //Crear un objeto de la clase Controller
         ControladorRegistro controlador  = new ControladorRegistro(vista, modelo);
         //Vincular la vista y el controlador
         vista.conectaControlador(controlador);
+    }
+    public static void main(String[] args) {
+        RegistroPrincipal  rp= new RegistroPrincipal();
     } 
 }

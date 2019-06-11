@@ -2,6 +2,7 @@ package vista;
 
 import controlador.ControladorDetalleCarrera;
 import modelo.Carrera;
+import modelo.Cliente;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -10,6 +11,7 @@ import java.awt.*;
 public class DetalleCarrera extends JFrame {
     //Clase que nos dirá que datos mostrar
     public Carrera carrera;
+    public Cliente cliente;
 
     //Panel Principal
     private JPanel contenedor;
@@ -30,15 +32,17 @@ public class DetalleCarrera extends JFrame {
     private String [] cabecera;
     private Object [][] datos;
 
-    public DetalleCarrera(Carrera c)
+    public DetalleCarrera(Carrera c, Cliente cliente)
     {
         carrera = c;
+        this.cliente = cliente;
 
         //Metodos de JFrame
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("Detalle carrera");
         setBounds(100, 100,650,650);
         contenedor = new JPanel();
+        contenedor.setBackground(Color.PINK);
         GridBagLayout gb = new GridBagLayout();
         GridBagConstraints constraints = new GridBagConstraints();
         getContentPane().add(contenedor);
@@ -71,6 +75,7 @@ public class DetalleCarrera extends JFrame {
         cabecera    = new String[] {"Nombre","Apellido Paterno","Apellido Materno","Apodo"};
         dtm         = new DefaultTableModel(datos,cabecera);
         tabla       = new JTable(dtm);
+        tabla.setBackground(Color.PINK);
         scroll.setViewportView(tabla);
         constraints.gridx=0;
         constraints.gridy=2;
