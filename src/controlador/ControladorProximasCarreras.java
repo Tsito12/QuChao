@@ -2,10 +2,8 @@ package controlador;
 
 import modelo.Carrera;
 import modelo.ModeloDetalleCarrera;
-import modelo.ModeloInicioSesion;
 import modelo.ModeloProximasCarreras;
 import vista.DetalleCarrera;
-import vista.VistaInicioSesion;
 import vista.VistaProximasCarreras;
 
 import java.awt.event.ActionEvent;

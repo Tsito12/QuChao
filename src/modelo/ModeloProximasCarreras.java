@@ -68,12 +68,12 @@ public class ModeloProximasCarreras {
         //Objeto para recoger los datos devueltos por el procedimiento almacenado
         ResultSet rs;
         Carrera carreraEncontrada = null;
-
-        String consulta ="select id_carrera, noParticipantes, fecha, noVueltas, hora from scautodromo.carrera where fecha =? and hora = ?;";
+        String fechac = c.getFecha();
+        String horac = c.getHora();
+        String consulta ="select id_carrera, noParticipantes, fecha, noVueltas, hora from scautodromo.carrera where fecha ='"+fechac+"' and hora='"+horac+"';";
         try
         {
             ps = getConexion().prepareStatement(consulta);
-            ps.setInt(1,c.getIdcarrera());
             rs = ps.executeQuery();
             if(rs.next())
             {
@@ -95,8 +95,8 @@ public class ModeloProximasCarreras {
         //  añadirlo a la tabla definida en la clase View
 
 
-        //Cargar datos de todos los estudiantes
-        String consultaSQL = "select id_carrera, noParticipantes, fecha, noVueltas, hora from scautodromo.carrera;";
+        //Cargar datos de todos las carreras
+        String consultaSQL = "select id_carrera,noParticipantes,fecha,noVueltas,hora from scautodromo.carrera where id_carrera in (select id_carrera from scautodromo.resultados where posicion is null);";
         List<Carrera> carreras = new ArrayList<Carrera>();
         try {
             //Preparar la llamada
@@ -118,7 +118,7 @@ public class ModeloProximasCarreras {
             }
         }catch (SQLException e)
         {
-            System.err.println("Error mostrando todas las carreras");
+            System.err.println("Error mostrando todas las carreras"+e);
         }
         return carreras;
     }
