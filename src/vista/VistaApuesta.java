@@ -91,5 +91,5 @@ public class VistaApuesta extends JDialog {
 /*public static void main(String[]args)
     {
         VistaApuesta v = new VistaApuesta();
-    }*/
+    }**/
 }
