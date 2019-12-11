@@ -22,7 +22,7 @@ public class ControladorProximasCarreras implements ActionListener, MouseListene
         this.modelo=modelo;
         this.vista=vista;
         cargarTabla();
-        cargarListaCarreras();
+        //cargarListaCarreras();
     }
     @Override
     public void actionPerformed(ActionEvent e) {

@@ -48,7 +48,7 @@ public class Pista extends JFrame {
     public JLabel getCarrito() {
         return carrito;
     }
-
+    /*
     public void correr() {
         Random random1 = new Random();
         Random random2 = new Random();
@@ -74,5 +74,5 @@ public class Pista extends JFrame {
         Pista pista = new Pista();
         pista.correr();
 
-    }
+    }*/
 }

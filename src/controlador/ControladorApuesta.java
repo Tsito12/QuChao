@@ -3,7 +3,7 @@ package controlador;
 import modelo.Cliente;
 import modelo.ModeloApuesta;
 import modelo.ModeloCarrera;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
+//import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import vista.VistaApuesta;
 import vista.VistaCarrera;
 
@@ -43,7 +43,7 @@ public class ControladorApuesta implements ActionListener {
                 System.out.println(this.vista.getCarrera().getNoVueltas());
                 vistaCarrera.acomodarCarritos();
                 vistaCarrera.gottaGoFast();
-                vistaCarrera.verTiempos();
+                //vistaCarrera.verTiempos();
                 break;
         }
     }

@@ -96,11 +96,12 @@ public class VistaProximasCarreras extends JFrame {
         sp.putConstraint(SpringLayout.EAST,btnDetalle,-250,SpringLayout.EAST,contenedor);
         setVisible(true);
         //Combo
+        /*
         comboCarrera = new JComboBox();
         contenedor.add(comboCarrera);
         sp.putConstraint(SpringLayout.SOUTH,comboCarrera,-10,SpringLayout.SOUTH,contenedor);
         sp.putConstraint(SpringLayout.WEST, comboCarrera, 125, SpringLayout.WEST,contenedor);
-        sp.putConstraint(SpringLayout.EAST,comboCarrera,-400,SpringLayout.EAST,contenedor);
+        sp.putConstraint(SpringLayout.EAST,comboCarrera,-400,SpringLayout.EAST,contenedor);*/
         //pack();
     }
 
