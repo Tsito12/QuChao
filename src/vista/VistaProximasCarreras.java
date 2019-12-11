@@ -54,7 +54,7 @@ public class VistaProximasCarreras extends JFrame {
         contenedor.add(titulo);
         sp.putConstraint(SpringLayout.NORTH, titulo, 50,SpringLayout.WEST, contenedor);
         sp.putConstraint(SpringLayout.WEST, titulo, 10 , SpringLayout.WEST, contenedor);
-        
+
 
         scroll      = new JScrollPane();
         cabecera    = new String[] {"Número de paricipantes","Numero de vueltas","Fecha","Hora"};
@@ -81,14 +81,7 @@ public class VistaProximasCarreras extends JFrame {
         sp.putConstraint(SpringLayout.WEST,btnDetalle,300,SpringLayout.WEST,contenedor);
         sp.putConstraint(SpringLayout.EAST,btnDetalle,-250,SpringLayout.EAST,contenedor);
         setVisible(true);
-        //Combo
-        /*
-        comboCarrera = new JComboBox();
-        contenedor.add(comboCarrera);
-        sp.putConstraint(SpringLayout.SOUTH,comboCarrera,-10,SpringLayout.SOUTH,contenedor);
-        sp.putConstraint(SpringLayout.WEST, comboCarrera, 125, SpringLayout.WEST,contenedor);
-        sp.putConstraint(SpringLayout.EAST,comboCarrera,-400,SpringLayout.EAST,contenedor);*/
-        //pack();
+
     }
 
     public String getCarreraSeleccionada() {
