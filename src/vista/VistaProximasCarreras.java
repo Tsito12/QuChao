@@ -54,21 +54,7 @@ public class VistaProximasCarreras extends JFrame {
         contenedor.add(titulo);
         sp.putConstraint(SpringLayout.NORTH, titulo, 50,SpringLayout.WEST, contenedor);
         sp.putConstraint(SpringLayout.WEST, titulo, 10 , SpringLayout.WEST, contenedor);
-
-        //Tabla
-        /*
-        scroll = new JScrollPane();
-        cabecera = new String[]{"Número de paricipantes","Numero de vueltas","Fecha","Hora"};
-        //datos = new Object[][]{{"Popo","Popo","Popo","Popo"}};
-        dtm = new DefaultTableModel(datos,cabecera);
-        tabla = new JTable(dtm);
-        scroll.setViewportView(tabla);
-        contenedor.add(scroll);
-        sp.putConstraint(SpringLayout.NORTH, scroll, 70, SpringLayout.NORTH, contenedor);
-        sp.putConstraint(SpringLayout.WEST, scroll, 10, SpringLayout.WEST, contenedor);
-        sp.putConstraint(SpringLayout.EAST, scroll, -10, SpringLayout.WEST, contenedor);
-        sp.putConstraint(SpringLayout.SOUTH, scroll, -50, SpringLayout.SOUTH, contenedor);
-        */
+        
 
         scroll      = new JScrollPane();
         cabecera    = new String[] {"Número de paricipantes","Numero de vueltas","Fecha","Hora"};
