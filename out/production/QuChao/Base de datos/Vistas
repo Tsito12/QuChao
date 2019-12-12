@@ -1,0 +1,188 @@
+set search_path to scautodromo;
+select * from carrera;
+select * from apuesta;
+--Vista de el total de apuestas, el porcentaje para la casa y el restante para repartir
+create view info_apuestas as
+select id_carrera,sum(monto) as bolsa_total, sum(monto*0.2) as casa, sum(monto*0.8) as bolsa_a_repartir
+from scautodromo.apuesta group by id_carrera;
+
+select * from info_apuestas;
+--Vista con los pilotos y lo que les han apostado en cada carrera
+create view apuesta_piloto as
+select apodo, id_carrera, sum(monto) as total_piloto
+from scautodromo.apuesta natural join scautodromo.piloto group by apodo,id_carrera order by id_carrera;
+
+select * from apuesta_piloto;
+--Funcion que regresa un entero con la suma total de apuestas para un piloto en determinada carrera
+create or replace function total_piloto (apodop varchar, carrera int) returns integer as
+    $$
+    declare
+        ap_piloto varchar;
+        i_carrera int;
+        total int;
+    begin
+        ap_piloto:=apodop;
+        i_carrera:=carrera;
+        total:=(select sum(monto) as tot_pil from scautodromo.apuesta natural join scautodromo.piloto where id_carrera=i_carrera and apodo=ap_piloto);
+        return total;
+    end;
+    $$
+language plpgsql;
+--Prueba de la funcion
+select * from total_piloto('El barbas',65432121);
+
+/* Pruebas de si estaba quedando bien la funcion
+select * from apuesta;
+
+select sum(monto) as tot_pil from apuesta natural join piloto where id_carrera=65432121 and apodo='El barbas';*/
+
+--Funcion que regresa cuantas carreras ha ganado determinado piloto(por apodo)
+create or replace function carreras_ganadas(piloto_a varchar) returns integer as
+$BODY$
+declare
+    ganadas int;
+begin
+    ganadas:=(select count(posicion) from scautodromo.resultados natural join scautodromo.piloto where posicion=1 and apodo=piloto_a);
+    return ganadas;
+end;
+$BODY$
+    language plpgsql;
+--Prueba de la funcion
+select * from carreras_ganadas('AbiPopo');
+
+--Prueba de la consulta utilizada en la funcion
+select count(posicion) as total_ganadas from scautodromo.resultados natural join scautodromo.piloto where posicion=1 and apodo='AbiPopo';
+
+--Funcion que nos regresa todas las carreras,los pilotos y el monto a los que le ha apostado un cliente
+create or replace function historial_apuestas(usuario varchar) returns table (carr int, ap_piloto varchar, cantidad int) as
+$BODY$
+select id_carrera, apodo, monto from scautodromo.apuesta natural join scautodromo.piloto where nombre_usuario=$1;
+$BODY$
+    language sql;
+
+select * from historial_apuestas('Xicoten');
+
+
+--Funcion que regresa si una apuesta hecha por un cliente a un piloto en una dteerminada carrera fue ganada o no
+create or replace function ganador(usuario varchar, ap_piloto varchar, i_carrera int) returns varchar as
+$BODY$
+declare
+    resultado varchar;
+    res int;
+begin
+    res:=(select posicion from scautodromo.resultados natural join scautodromo.piloto natural join scautodromo.cliente where id_carrera=i_carrera and apodo=ap_piloto and nombre_usuario=usuario);
+    if res= 1 then
+        resultado:= 'Ganador';
+    else
+        resultado:='Apuesta Perdida';
+    end if;
+    return resultado;
+end;
+$BODY$
+    language plpgsql;
+
+select * from ganador('Xicoten','Doc en mat disc',65432121);
+
+--Vista que muestra la carrera, el apodo y el tiempo de los pilotos que han ganado carreras
+create view ganadores as
+select id_carrera,apodo,tiempo from scautodromo.resultados natural join scautodromo.piloto where posicion = 1;
+
+--Trigger que se utiliza cuando se agregan pilotos, el cual valida que el numero de pilotos no sobrepase los 7 
+-- y va actualizando el numero de participantes de las carreras
+create or replace function agregar_piloto() returns trigger as
+$$
+declare
+	registro resultados%rowtype;
+	cupoc int;
+begin
+	registro = new;
+	if exists (select * from scautodromo.resultados where new.id_carrera = resultados.id_carrera) then
+		cupoc =	(select c.noparticipantes from carrera as c where c.id_carrera = new.id_carrera); 
+			if(cupoc<7) then 
+				update scautodromo.carrera set noparticipantes = noparticipantes + 1 where carrera.id_carrera = registro.id_carrera;
+			else
+				raise exception 'Carrera llena, no puedes ingresar mas pilotos';
+			end if;
+	else
+		update scautodromo.carrera set noparticipantes = noparticipantes + 1 where carrera.id_carrera = registro.id_carrera;
+	end if;
+	return registro;
+end
+$$
+language plpgsql;
+--drop trigger trigger_agregarp on resultados;
+create trigger trigger_agregarp before insert 
+on resultados for each row execute procedure scautodromo.agregar_piloto();
+--datos de prueba
+INSERT INTO scautodromo.resultados(id_carrera,noLicencia) VALUES (45908629,34597307);
+INSERT INTO scautodromo.resultados(id_carrera,noLicencia) VALUES (45908629,34085937);
+INSERT INTO scautodromo.resultados(id_carrera,noLicencia) VALUES (45908629,34897403);
+INSERT INTO scautodromo.resultados(id_carrera,noLicencia) VALUES (45908629,34625642);
+INSERT INTO scautodromo.resultados(id_carrera,noLicencia) VALUES (45908629,34291818);
+INSERT INTO scautodromo.resultados(id_carrera,noLicencia) VALUES (45908629,34746902);
+INSERT INTO scautodromo.resultados(id_carrera,noLicencia) VALUES (45908629,34976403);
+
+--trigger que no deja apostar valores menores a 10 ni 10 minutos antes de la carrera
+create or replace function limitet_apuesta() returns trigger as
+$$
+declare
+	fechac date;
+	horac time;
+begin
+	if(new.monto>=10) then
+		fechac = (select fecha from scautodromo.carrera where id_carrera = new.id_carrera);
+		horac = (select hora from scautodromo.carrera where id_carrera = new.id_carrera);
+		if(current_date<=fechac) then
+		    if(current_date=fechac) then
+			    if (horac -(now()::time))>interval '10 minute' then
+				    new.fecha = current_date;
+				    return new;
+			    else
+				    raise exception 'Apuestas cerradas';
+			    end if;
+			else
+			    new.fecha=current_date;
+			    return new;
+			end if;
+		else
+			raise exception 'La carrera ya se ha realizado, no puedes apostar';
+		end if;
+	else
+		raise exception 'No se pueden hacer apuestas menores a 10 pesos';
+		end if;
+	return null;
+end
+$$
+language plpgsql;
+--drop trigger trigger_limitea on resultados;
+create trigger trigger_limitea before insert 
+on apuesta for each row execute procedure scautodromo.limitet_apuesta();
+
+update carrera set fecha = '2019-12-12',hora = '12:37:00' where id_carrera=45908629;
+INSERT INTO scautodromo.apuesta(nombre_usuario, id_carrera, noLicencia, monto,importe) VALUES('Suertudo03',45908629,34597307,200,864);
+INSERT INTO scautodromo.apuesta(nombre_usuario, id_carrera, noLicencia, monto,importe) VALUES ('Imrich',45908629,34085937,300,112);
+
+-- Ya no se me ocurrieron mas triggers xDxD
+-- No permite ingresar carreras cuya fecha sea menor a la actual
+select id_carrera,noParticipantes,fecha,noVueltas,hora from scautodromo.carrera where id_carrera in (select id_carrera from scautodromo.resultados where posicion is null);
+
+create or replace function add_carrera() returns trigger as
+$$
+declare
+begin
+	if(new.fecha<current_date) then
+		raise exception 'La fecha debe ser mayor a la actual';
+	else
+		return new;
+	end if;
+end
+$$
+language plpgsql;
+--drop trigger trigger_elimap on resultados;
+create trigger trigger_addc before insert
+on carrera for each row execute procedure scautodromo.add_carrera();
+
+INSERT INTO scautodromo.carrera(id_carrera,  noParticipantes, fecha,  noVueltas, hora) VALUES
+(45562234,0,'2019-12-12',30,'10:00:00.00');
+
+
