@@ -35,3 +35,20 @@ select * from total_piloto('El barbas',65432121);
 select * from apuesta;
 
 select sum(monto) as tot_pil from apuesta natural join piloto where id_carrera=65432121 and apodo='El barbas';*/
+
+--Funcion que regresa cuantas carreras ha ganado determinado piloto(por apodo)
+create or replace function carreras_ganadas(piloto_a varchar) returns integer as
+$BODY$
+declare
+    ganadas int;
+begin
+    ganadas:=(select count(posicion) from resultados natural join piloto where posicion=1 and apodo=piloto_a);
+    return ganadas;
+end;
+$BODY$
+    language plpgsql;
+--Prueba de la funcion
+select * from carreras_ganadas('AbiPopo');
+
+--Prueba de la consulta utilizada en la funcion
+select count(posicion) as total_ganadas from resultados natural join piloto where posicion=1 and apodo='AbiPopo';
