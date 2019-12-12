@@ -9,7 +9,7 @@ import java.util.Calendar;
 public class ModeloApuesta {
     private String  host     = "localhost";
     private String  usuario     = "postgres";
-    private String  clave       = "0987654321";
+    private String  clave       = "admin";
     private int     puerto      = 5432;
     private String  servidor    = "";
     private String  baseDatos;
