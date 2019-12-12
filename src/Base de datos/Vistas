@@ -86,3 +86,32 @@ select * from ganador('Xicoten','Doc en mat disc',65432121);
 --Vista que muestra la carrera, el apodo y el tiempo de los pilotos que han ganado carreras
 create view ganadores as
 select id_carrera,apodo,tiempo from resultados natural join piloto where posicion = 1;
+
+--Trigger que se utiliza cuando se agregan pilotos, el cual valida que el numero de pilotos no sobrepase los 7 
+-- y va actualizando el numero de participantes de las carreras
+
+create or replace function agregar_piloto() returns trigger as
+$$
+declare
+	registro resultados%rowtype;
+	cupoc int;
+begin
+	registro = new;
+	if exists (select * from resultados where new.id_carrera = resultados.id_carrera) then
+		cupoc =	(select c.noparticipantes from carrera as c where c.id_carrera = new.id_carrera); 
+			if(cupoc<7) then 
+				update carrera set noparticipantes = noparticipantes + 1 where carrera.id_carrera = registro.id_carrera;
+			else
+				raise notice 'Carrera llena, no puedes ingresar mas pilotos';
+			end if;
+	else
+		update carrera set noparticipantes = noparticipantes + 1 where carrera.id_carrera = registro.id_carrera;
+	end if;
+	return registro;
+end
+$$
+language plpgsql;
+--drop trigger trigger_agregarp on resultados;
+create trigger trigger_agregarp before insert 
+on resultados for each row execute procedure agregar_piloto();
+
