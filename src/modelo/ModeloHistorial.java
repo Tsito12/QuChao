@@ -65,7 +65,6 @@ public class ModeloHistorial {
         //Objeto para recoger los datos devueltos por el procedimiento almacenado
         ResultSet rs;
         String usuario = cliente.getUsername();
-        System.out.println(usuario);
         String consultaSQL ="select * from scautodromo.historial_apuestas('"+usuario+"');";
         List<Integer> lista = new ArrayList<>();
 
@@ -99,7 +98,6 @@ public class ModeloHistorial {
         ResultSet rs;
         String resltado = null;
         String usuario = cliente.getUsername();
-        System.out.println(cliente.getUsername());
         String consultaSQL ="select * from scautodromo.historial_apuestas('"+usuario+"');";
         //select * from historial_apuestas('Xicoten');
         List<String> lista = new ArrayList<>();
