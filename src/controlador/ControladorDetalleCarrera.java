@@ -8,10 +8,12 @@ import vista.VistaProximasCarreras;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.List;
 import java.util.Vector;
 
-public class ControladorDetalleCarrera implements ActionListener {
+public class ControladorDetalleCarrera implements ActionListener, MouseListener {
     private DetalleCarrera vista;
     private ModeloDetalleCarrera modelo;
 
@@ -19,6 +21,7 @@ public class ControladorDetalleCarrera implements ActionListener {
         this.vista = vista;
         this.modelo = modelo;
         cargarTabla();
+        llenarTotalApostado();
     }
 
     public void cargarTabla()
@@ -39,6 +42,19 @@ public class ControladorDetalleCarrera implements ActionListener {
             fila.add(piltos.get(i).getapellidoM());
             fila.add(piltos.get(i).getapodo());
             this.vista.dtm.addRow(fila);
+        }
+    }
+
+    public void llenarTotalApostado()
+    {
+        int filaPulsada = this.vista.tabla.getSelectedRow();
+        if(filaPulsada>=0) {
+            Piloto p = new Piloto();
+            String apodo = (String) this.vista.dtm.getValueAt(filaPulsada, 3);
+            p.setapodo(apodo);
+            Carrera carrera = this.vista.carrera;
+            int total = modelo.cantidadApostada(p, carrera);
+            this.vista.getLblCantidadApostada().setText("La cantidad apostada para "+apodo+" es de $"+total);
         }
     }
 
@@ -88,5 +104,30 @@ public class ControladorDetalleCarrera implements ActionListener {
                 }
                 break;
         }
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        llenarTotalApostado();
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
     }
 }

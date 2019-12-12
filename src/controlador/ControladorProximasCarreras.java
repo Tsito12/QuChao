@@ -2,8 +2,10 @@ package controlador;
 
 import modelo.Carrera;
 import modelo.ModeloDetalleCarrera;
+import modelo.ModeloHistorial;
 import modelo.ModeloProximasCarreras;
 import vista.DetalleCarrera;
+import vista.VistaHistorial;
 import vista.VistaProximasCarreras;
 
 import java.awt.event.ActionEvent;
@@ -55,6 +57,13 @@ public class ControladorProximasCarreras implements ActionListener, MouseListene
                     ControladorDetalleCarrera controlador = new ControladorDetalleCarrera(vista,modelo);
                     vista.conectaControlador(controlador);
                 }
+                break;
+            case "Historial":
+                this.vista.dispose();
+                VistaHistorial vistaHistorial = new VistaHistorial(this.vista.cliente);
+                ModeloHistorial modeloHistorial= new ModeloHistorial("dbautodromo");
+                ControladorHIstorial controladorHIstorial = new ControladorHIstorial(vistaHistorial,modeloHistorial);
+                vistaHistorial.conectarControlador(controladorHIstorial);
                 break;
         }
 

@@ -86,3 +86,99 @@ select * from ganador('Xicoten','Doc en mat disc',65432121);
 --Vista que muestra la carrera, el apodo y el tiempo de los pilotos que han ganado carreras
 create view ganadores as
 select id_carrera,apodo,tiempo from resultados natural join piloto where posicion = 1;
+
+--Trigger que se utiliza cuando se agregan pilotos, el cual valida que el numero de pilotos no sobrepase los 7 
+-- y va actualizando el numero de participantes de las carreras
+create or replace function agregar_piloto() returns trigger as
+$$
+declare
+	registro resultados%rowtype;
+	cupoc int;
+begin
+	registro = new;
+	if exists (select * from resultados where new.id_carrera = resultados.id_carrera) then
+		cupoc =	(select c.noparticipantes from carrera as c where c.id_carrera = new.id_carrera); 
+			if(cupoc<7) then 
+				update carrera set noparticipantes = noparticipantes + 1 where carrera.id_carrera = registro.id_carrera;
+			else
+				raise exception 'Carrera llena, no puedes ingresar mas pilotos';
+			end if;
+	else
+		update carrera set noparticipantes = noparticipantes + 1 where carrera.id_carrera = registro.id_carrera;
+	end if;
+	return registro;
+end
+$$
+language plpgsql;
+--drop trigger trigger_agregarp on resultados;
+create trigger trigger_agregarp before insert 
+on resultados for each row execute procedure agregar_piloto();
+--datos de prueba
+INSERT INTO scautodromo.resultados(id_carrera,noLicencia) VALUES (45908629,34597307);
+INSERT INTO scautodromo.resultados(id_carrera,noLicencia) VALUES (45908629,34085937);
+INSERT INTO scautodromo.resultados(id_carrera,noLicencia) VALUES (45908629,34897403);
+INSERT INTO scautodromo.resultados(id_carrera,noLicencia) VALUES (45908629,34625642);
+INSERT INTO scautodromo.resultados(id_carrera,noLicencia) VALUES (45908629,34291818);
+INSERT INTO scautodromo.resultados(id_carrera,noLicencia) VALUES (45908629,34746902);
+INSERT INTO scautodromo.resultados(id_carrera,noLicencia) VALUES (45908629,34976403);
+
+--trigger que no deja apostar valores menores a 10 ni 10 minutos antes de la carrera
+create or replace function limitet_apuesta() returns trigger as
+$$
+declare
+	fechac date;
+	horac time;
+begin
+	registro = new;
+	if(new.monto>=10) then
+		fechac = (select fecha from carrera where id_carrera = new.id_carrera);
+		horac = (select hora from carrera where id_carrera = new.id_carrera);
+		if(current_date<=fechac) then 
+			if (horac -(now()::time))>interval '10 minute' then
+				new.fecha = current_date;
+				return new;
+			else
+				raise exception 'Apuestas cerradas';
+			end if;
+		else
+			raise exception 'La carrera ya se ha realizado, no puedes apostar';
+		end if;
+	else
+		raise exception 'No se pueden hacer apuestas menores a 10 pesos';
+		end if;
+	return null;
+end
+$$
+language plpgsql;
+--drop trigger trigger_limitea on resultados;
+create trigger trigger_limitea before insert 
+on apuesta for each row execute procedure limitet_apuesta();
+
+update carrera set fecha = '2019-12-12',hora = '02:37:00' where id_carrera=45908629;
+INSERT INTO scautodromo.apuesta(nombre_usuario, id_carrera, noLicencia, monto,importe) VALUES('Suertudo03',45908629,34597307,200,864);
+INSERT INTO scautodromo.apuesta(nombre_usuario, id_carrera, noLicencia, monto,importe) VALUES ('Imrich',45908629,34085937,300,112);
+
+-- Ya no se me ocurrieron mas triggers xDxD
+-- No permite ingresar carreras cuya fecha sea menor a la actual
+select id_carrera,noParticipantes,fecha,noVueltas,hora from scautodromo.carrera where id_carrera in (select id_carrera from scautodromo.resultados where posicion is null);
+
+create or replace function add_carrera() returns trigger as
+$$
+declare
+begin
+	if(new.fecha<current_date) then
+		raise exception 'La fecha debe ser mayor a la actual';
+	else
+		return new;
+	end if;
+end
+$$
+language plpgsql;
+--drop trigger trigger_elimap on resultados;
+create trigger trigger_addc before insert
+on carrera for each row execute procedure add_carrera();
+
+INSERT INTO scautodromo.carrera(id_carrera,  noParticipantes, fecha,  noVueltas, hora) VALUES
+(45562234,0,'2019-12-12',30,'10:00:00.00');
+
+
