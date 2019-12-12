@@ -1,16 +1,9 @@
 package modelo;
 
-import javax.swing.*;
-import java.sql.*;
-import java.util.ArrayList;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.ResultSet;
 import java.sql.PreparedStatement;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.JOptionPane;
 
 public class ModeloInsertarCarreras {
 
@@ -28,7 +21,7 @@ public class ModeloInsertarCarreras {
         public ModeloInsertarCarreras(String baseDatos){
             this.baseDatos = baseDatos;
         }
-        public void ConexionBd(){
+        protected void ConexionBd(){
             this.servidor="jdbc:postgresql://"+host+":"+ puerto+"/"+baseDatos;
 
             //Registrar el driver
@@ -58,6 +51,7 @@ public class ModeloInsertarCarreras {
         public void login(String usuario, String clave){
             this.usuario=usuario;
             this.clave=clave;
+            ConexionBd();
         }
 
     public boolean insertCarrera(Carrera e){

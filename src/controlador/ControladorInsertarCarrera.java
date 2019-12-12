@@ -36,7 +36,6 @@ public class ControladorInsertarCarrera implements ActionListener, MouseListener
         switch (comando) {
             case "INSERTAR":
                 modelo.login(view.getuser(),view.getpass());
-                modelo.ConexionBd();
                 e = new Carrera(view.getid(),view.getNoparticipantes(), view.getFecha(),view.getnoVueltas(),view.getHora());
                 modelo.insertCarrera(e);
                 this.modelo.closeConexion();
