@@ -1,0 +1,37 @@
+set search_path to scautodromo;
+select * from carrera;
+select * from apuesta;
+--Vista de el total de apuestas, el porcentaje para la casa y el restante para repartir
+create view info_apuestas as
+select id_carrera,sum(monto) as bolsa_total, sum(monto*0.2) as casa, sum(monto*0.8) as bolsa_a_repartir
+from apuesta group by id_carrera;
+
+select * from info_apuestas;
+--Vista con los pilotos y lo que les han apostado en cada carrera
+create view apuesta_piloto as
+select apodo, id_carrera, sum(monto) as total_piloto
+from apuesta natural join piloto group by apodo,id_carrera order by id_carrera;
+
+select * from apuesta_piloto;
+--Funcion que regresa un entero con la suma total de apuestas para un piloto en determinada carrera
+create or replace function total_piloto (apodop varchar, carrera int) returns integer as
+    $$
+    declare
+        ap_piloto varchar;
+        i_carrera int;
+        total int;
+    begin
+        ap_piloto:=apodop;
+        i_carrera:=carrera;
+        total:=(select sum(monto) as tot_pil from apuesta natural join piloto where id_carrera=i_carrera and apodo=ap_piloto);
+        return total;
+    end;
+    $$
+language plpgsql;
+--Prueba de la funcion
+select * from total_piloto('El barbas',65432121);
+
+/* Pruebas de si estaba quedando bien la funcion
+select * from apuesta;
+
+select sum(monto) as tot_pil from apuesta natural join piloto where id_carrera=65432121 and apodo='El barbas';*/
