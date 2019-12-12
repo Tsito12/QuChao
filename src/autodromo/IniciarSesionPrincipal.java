@@ -18,9 +18,10 @@ import vista.VistaInicioSesion;
 public class IniciarSesionPrincipal {
     public static void main(String[] args) {
         //Invocar al constructor de la clase Bd
+        VistaInicioSesion vista  = new VistaInicioSesion();
         ModeloInicioSesion modelo = new ModeloInicioSesion("dbautodromo");
         //Crear un objeto de la clase View
-        VistaInicioSesion vista  = new VistaInicioSesion();
+
         //Crear un objeto de la clase Controller
         ControladorInicioSesion controlador  = new ControladorInicioSesion(vista, modelo);
         //Vincular la vista y el controlador

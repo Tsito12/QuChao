@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
 public class ModeloInicioSesion {
     private String  host     = "localhost";
     private String  usuario     = "postgres";
-    private String  clave       = "0987654321";
+    private String  clave       = "admin";
     private int     puerto      = 5432;
     private String  servidor    = "";
     private String  baseDatos;
@@ -67,7 +67,7 @@ public class ModeloInicioSesion {
         //  añadirlo a la tabla definida en la clase View
 
         //Cargar datos de todos los estudiantes
-        String consultaSQL = "select * from scautodromo.cliente where nombre_usuario=? and contraseña=?;";
+        String consultaSQL = "select * from scautodromo.cliente where nombre_usuario=? and contrasenia=?;";
         ArrayList<Cliente> clientes = new ArrayList<Cliente>();
         try {
             //Preparar la llamada
@@ -83,7 +83,7 @@ public class ModeloInicioSesion {
             {
                 Cliente p = new Cliente();
                 p.setUsername(rs.getString("nombre_usuario"));
-                p.setPass(rs.getString("contraseña"));
+                p.setPass(rs.getString("contrasenia"));
                 p.setCuenta(rs.getString("cuenta_bancaria"));
                 p.setCorreo(rs.getString("correo_elec"));
                 p.setDir_colonia(rs.getString("dir_colonia"));

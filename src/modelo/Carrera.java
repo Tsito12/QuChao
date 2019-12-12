@@ -14,6 +14,15 @@ public class Carrera {
         this.noVueltas = noVueltas;
         this.hora = hora;
     }
+
+    public Carrera(int noParticpantes, String fecha, int noVueltas, String hora) {
+        this.idcarrera = idcarrera;
+        this.noParticpantes = noParticpantes;
+        this.fecha = fecha;
+        this.noVueltas = noVueltas;
+        this.hora = hora;
+    }
+
     public Carrera(){}
 
     public int getIdcarrera() {
