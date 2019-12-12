@@ -32,6 +32,7 @@ public class ControladorProximasCarreras implements ActionListener, MouseListene
             case "Salir":
                 modelo.closeConexion();
                 this.vista.dispose();
+                System.exit(0);
                 //VistaInicioSesion vistaInicioSesion = new VistaInicioSesion();
                 //ModeloInicioSesion modeloInicioSesion = new ModeloInicioSesion("dbautodromo");
                 //ControladorInicioSesion controladorInicioSesion = new ControladorInicioSesion(vistaInicioSesion,modeloInicioSesion);
