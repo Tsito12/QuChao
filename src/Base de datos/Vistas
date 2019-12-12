@@ -138,7 +138,7 @@ begin
 				new.fecha = current_date;
 				return new;
 			else
-				raise exception 'Auestas cerradas';
+				raise exception 'Apuestas cerradas';
 			end if;
 		else
 			raise exception 'La carrera ya se ha realizado, no puedes apostar';
