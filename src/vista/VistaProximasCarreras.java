@@ -17,6 +17,7 @@ public class VistaProximasCarreras extends JFrame {
     private JLabel lblUsuario;
     private JButton btnUsuarioSalir;
     private JButton btnDetalle;
+    private JButton btnHistorial;
     //TABLA
     public JTable tabla;
     public DefaultTableModel dtm;
@@ -39,15 +40,22 @@ public class VistaProximasCarreras extends JFrame {
         contenedor.setLayout(sp);
 
         //Botones del usuario
-        lblUsuario = new JLabel("Bienvenido, "+cliente.getUsername());
-        contenedor.add(lblUsuario);
-        sp.putConstraint(SpringLayout.NORTH, lblUsuario,10,SpringLayout.NORTH,contenedor);
-        sp.putConstraint(SpringLayout.EAST, lblUsuario,-100,SpringLayout.EAST,contenedor);
+
 
         btnUsuarioSalir = new JButton("Salir");
         contenedor.add(btnUsuarioSalir);
         sp.putConstraint(SpringLayout.NORTH, btnUsuarioSalir,10,SpringLayout.NORTH,contenedor);
         sp.putConstraint(SpringLayout.EAST,btnUsuarioSalir,-10,SpringLayout.EAST,contenedor);
+
+        btnHistorial = new JButton("Historial");
+        contenedor.add(btnHistorial);
+        sp.putConstraint(SpringLayout.NORTH, btnHistorial,10,SpringLayout.NORTH,contenedor);
+        sp.putConstraint(SpringLayout.EAST, btnHistorial,-100,SpringLayout.EAST,btnUsuarioSalir);
+
+        lblUsuario = new JLabel("Bienvenido, "+cliente.getUsername());
+        contenedor.add(lblUsuario);
+        sp.putConstraint(SpringLayout.NORTH, lblUsuario,10,SpringLayout.NORTH,contenedor);
+        sp.putConstraint(SpringLayout.EAST, lblUsuario,-100,SpringLayout.EAST,btnHistorial);
 
         //Titulo de la tabla
         titulo = new JLabel("Proximas carreras");
@@ -97,6 +105,8 @@ public class VistaProximasCarreras extends JFrame {
         btnUsuarioSalir.addActionListener(c);
         btnDetalle.setActionCommand("Detalle");
         btnDetalle.addActionListener(c);
+        btnHistorial.setActionCommand("Historial");
+        btnHistorial.addActionListener(c);
     }
 /*
     public static void main(String[] args)
