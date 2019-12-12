@@ -84,7 +84,7 @@ public class ModeloHistorialPiloto {
                 carrera.setIdcarrera(rs.getInt("id_carrera"));
                 carrera.setNoVueltas(rs.getInt("noVueltas"));
                 carrera.setNoParticpantes(rs.getInt("noParticipantes"));
-                carrera.setFecha(rs.getString("fecha"));
+                carrera.setFecha((rs.getString("fecha")));
                 carrera.setHora(rs.getString("hora"));
                 listaDeCarreras.add(carrera);
             }

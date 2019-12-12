@@ -1,5 +1,7 @@
 package modelo;
 
+import java.sql.Date;
+
 public class Carrera {
     private int idcarrera;
     private int noParticpantes;
@@ -8,14 +10,6 @@ public class Carrera {
     private String hora;
 
     public Carrera(int idcarrera, int noParticpantes, String fecha, int noVueltas, String hora) {
-        this.idcarrera = idcarrera;
-        this.noParticpantes = noParticpantes;
-        this.fecha = fecha;
-        this.noVueltas = noVueltas;
-        this.hora = hora;
-    }
-
-    public Carrera(int noParticpantes, String fecha, int noVueltas, String hora) {
         this.idcarrera = idcarrera;
         this.noParticpantes = noParticpantes;
         this.fecha = fecha;
@@ -44,7 +38,7 @@ public class Carrera {
     public String getFecha() {
         return fecha;
     }
-
+    public java.sql.Date getFechaf(){return Date.valueOf(getFecha());}
     public void setFecha(String fecha) {
         this.fecha = fecha;
     }

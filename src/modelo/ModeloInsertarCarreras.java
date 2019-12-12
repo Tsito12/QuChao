@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
+import java.sql.Date;
 
 public class ModeloInsertarCarreras {
 
@@ -64,7 +65,7 @@ public class ModeloInsertarCarreras {
             //Indicar qué información se pasa al Statement
             ps.setInt(1, e.getIdcarrera());
             ps.setInt(2, e.getNoParticpantes());
-            ps.setString(3,e.getFecha());
+            ps.setDate(3, e.getFechaf());
             ps.setInt(4,e.getNoVueltas());
             ps.setString(5, e.getHora());
 

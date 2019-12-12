@@ -4,6 +4,7 @@ import com.toedter.calendar.JDateChooser;
 import controlador.ControladorInsertarCarrera;
 
 import javax.swing.*;
+import java.sql.Date;
 
 
 public class VistaInsertarCarreras extends JFrame {
@@ -172,6 +173,9 @@ public class VistaInsertarCarreras extends JFrame {
         sp.putConstraint(SpringLayout.WEST, bntregistrar,   35,
                 SpringLayout.WEST, contenedor);
 
+        setBounds(100,100,300,175);
+        setVisible(true);
+
     }
 
     public String getuser(){return txtusername.getText();}
@@ -179,6 +183,7 @@ public class VistaInsertarCarreras extends JFrame {
     public int getid(){return Integer.parseInt(txtidcarrera.getText());}
     public int getNoparticipantes(){return Integer.parseInt(txtnoparticipantes.getText());}
     public String getFecha(){return chdate.getDateFormatString();}
+
     public int getnoVueltas(){return Integer.parseInt(txtnovueltas.getText());}
     public String getHora(){return txthora.getText();}
 
