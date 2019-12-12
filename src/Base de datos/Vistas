@@ -52,3 +52,33 @@ select * from carreras_ganadas('AbiPopo');
 
 --Prueba de la consulta utilizada en la funcion
 select count(posicion) as total_ganadas from resultados natural join piloto where posicion=1 and apodo='AbiPopo';
+
+--Funcion que nos regresa todas las carreras,los pilotos y el monto a los que le ha apostado un cliente
+create or replace function historial_apuestas(usuario varchar) returns table (carr int, ap_piloto varchar, cantidad int) as
+$BODY$
+select id_carrera, apodo, monto from apuesta natural join piloto where nombre_usuario=$1;
+$BODY$
+    language sql;
+
+select * from historial_apuestas('Xicoten');
+
+
+--Funcion que regresa si una apuesta hecha por un cliente a un piloto en una dteerminada carrera fue ganada o no
+create or replace function ganador(usuario varchar, ap_piloto varchar, i_carrera int) returns varchar as
+$BODY$
+declare
+    resultado varchar;
+    res int;
+begin
+    res:=(select posicion from resultados natural join piloto natural join cliente where id_carrera=i_carrera and apodo=ap_piloto and nombre_usuario=usuario);
+    if res= 1 then
+        resultado:= 'Ganador';
+    else
+        resultado:='Apuesta Perdida';
+    end if;
+    return resultado;
+end;
+$BODY$
+    language plpgsql;
+
+select * from ganador('Xicoten','Doc en mat disc',65432121);
