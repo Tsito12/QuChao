@@ -129,16 +129,20 @@ declare
 	fechac date;
 	horac time;
 begin
-	registro = new;
 	if(new.monto>=10) then
 		fechac = (select fecha from scautodromo.carrera where id_carrera = new.id_carrera);
 		horac = (select hora from scautodromo.carrera where id_carrera = new.id_carrera);
-		if(current_date<=fechac) then 
-			if (horac -(now()::time))>interval '10 minute' then
-				new.fecha = current_date;
-				return new;
+		if(current_date<=fechac) then
+		    if(current_date=fechac) then
+			    if (horac -(now()::time))>interval '10 minute' then
+				    new.fecha = current_date;
+				    return new;
+			    else
+				    raise exception 'Apuestas cerradas';
+			    end if;
 			else
-				raise exception 'Apuestas cerradas';
+			    new.fecha=current_date;
+			    return new;
 			end if;
 		else
 			raise exception 'La carrera ya se ha realizado, no puedes apostar';
@@ -154,7 +158,7 @@ language plpgsql;
 create trigger trigger_limitea before insert 
 on apuesta for each row execute procedure scautodromo.limitet_apuesta();
 
-update carrera set fecha = '2019-12-12',hora = '02:37:00' where id_carrera=45908629;
+update carrera set fecha = '2019-12-12',hora = '12:37:00' where id_carrera=45908629;
 INSERT INTO scautodromo.apuesta(nombre_usuario, id_carrera, noLicencia, monto,importe) VALUES('Suertudo03',45908629,34597307,200,864);
 INSERT INTO scautodromo.apuesta(nombre_usuario, id_carrera, noLicencia, monto,importe) VALUES ('Imrich',45908629,34085937,300,112);
 

@@ -1,0 +1,137 @@
+
+INSERT INTO scautodromo.carrera(id_carrera,  noParticipantes, fecha,  noVueltas, hora) VALUES
+(45562466,0,'2019-12-15',30,'10:00:00.00'),
+(45908629,0,'2019-12-13',25,'09:00:00.00');
+select * from scautodromo.carrera;
+
+update scautodromo.carrera set noparticipantes = 0 where id_carrera = 45908629;
+update scautodromo.carrera set fecha = '2019-12-16' where id_carrera=45908629;
+
+INSERT INTO scautodromo.piloto (noLicencia, nombre, apellidoP, apellidoM, apodo) VALUES
+(34085362,'Andres','Gonzalez','Torres','Andy'),
+(34138366,'Gerardo','Perez','Martinez','Gerar'),
+(34876493,'Luis','Torres','Masias','Pillo'),
+(34047957,'Julio','Vera','Fernandez','Emperador'),
+(34541341,'Alan','Garcia','Mateo','Ali'),
+(34725281,'Eduardo','Gomez','Martin','Eddy'),
+(34935673,'Edgar','Santiago','Lopez','Gardo'),
+(34937031,'Matias','Mateo','Caravantes','Mat'),
+(34597307,'Alvin','Morales','Sanchez','Teodoro'),
+(34085937,'Oscar','Hernandez','Gonzales','Scar'),
+(34897403,'Carlos','Santiago','Santiago','Salcido'),
+(34625642,'Marcos','Lopez','Lopez','Polo'),
+(34291818,'Daniel','Sanchez','Perez','Leo'),
+(34746902,'Orlando','Garcia','Trujillo','Landi'),
+(34976403,'Emmanuel','Vasquez','Soza','Manu'),
+(34683928,'Jose','Mendoza','Garcia','Chepe'),
+(34784389,'Miguel','Perez','Cortes','Mick'),
+(34804582,'Alex','Martinez','Aguilar','Soto'),
+(34093725,'Cristian','Diaz','Madero','Castro'),
+(34562752,'Ricardo','Palacios','Santiago','Richi');
+select * from scautodromo.piloto;
+
+INSERT INTO scautodromo.auto (noSeguro,model,noPlazas,noLicencia) VALUES
+(52134257,'Ferrari 333 SP',1,34085362),
+(52124359,'Ferrari 333 SP',1,34138366),
+(52109824,'Ferrari 333 SP',1,34876493),
+(52098715,'Ferrari 333 SP',1,34047957),
+(52935108,'Ferrari 333 SP',1,34541341),
+(52319741,'Ferrari 333 SP',1,34725281),
+(52851789,'Ferrari 333 SP',1,34935673),
+(52140917,'Ferrari 333 SP',1,34937031),
+(52091857,'Ferrari 637',1,34597307),
+(52901375,'Ferrari 637',1,34085937),
+(52897513,'Ferrari 637',1,34897403),
+(52513471,'Ferrari 637',1,34625642),
+(52718518,'Ferrari 637',1,34291818),
+(52814314,'Ferrari 637',1,34746902),
+(52901511,'Ferrari 637',1,34976403),
+(52918516,'Ferrari 637',1,34683928),
+(52365827,'Ferrari 637',1,34784389),
+(52356716,'Ferrari 637',1,34804582),
+(52124275,'Porsche 918 Spyder',2,34085362),
+(52192582,'Koenigsegg CCGT',2,34138366),
+(52175822,'Acura ARX-01',1,34876493);
+select * from scautodromo.auto;
+
+INSERT INTO scautodromo.cliente (nombre_usuario,contraseña,cuenta_bancaria,correo_elec,dir_cp,dir_colonia,dir_calle,dir_numero,nombre,apellidoP,apellidoM) VALUES
+('Suertudo03','contraseña','MX6683721927301823949283','GaboML@gmail.com',68000,'Reforma', 'Independencia','32','Gabriel','Montiel','Lopez'),
+('Imrich','contraseña','MX5346234234623462346643','JorgePino@gmail.com',68100,'Las flores', 'Huertas','123','Jorge','Pineda','Guzman'),
+('Onemore','contraseña','MX6347245734575786532563','LuisJime@gmail.com',68100,'Reforma', 'Independencia','21','Luis','Jimenez','Lopez'),
+('Maquinadefuego','contraseña','MX9358493451452874514543','Monti3121@gmail.com',68000,'Las flores', 'Huertas','42','Javier','Montes','Lopez'),
+('MoneyMoney','contraseña','MX9453745872547245642651','MJLF2131@gmail.com',68000,'Las flores','Gladiolas','57','Miguel','Juarez','Fernandez'),
+('Gambito33','contraseña','MX1234123418468484285761','javirr@hotmail.com',68000,'Las flores','Orquideas','74','Javier','Rojas','Ramirez'),
+('ReyTroll','contraseña','MX0912639481723098617365','alonsohg@hotmail.com',68000,'Las flores','Orquideas','146','Alonso','Hernandez','Gonzales'),
+('Tacañin','contraseña','MX1182934701983570571236','juliSS@hotmail.com',68000,'Reforma','Independencia','76','Julio','Santiago','Santiago'),
+('MoniMoni','contraseña','MX5832650187236580127305','jjVas@hotmail.com',68000,'Reforma','Madero','67','Jose','Jimenez','Vasquez'),
+('Coinsforme','contraseña','MX8927105981623946128037','MoraGO@hotmail.com',68000,'Reforma','Revolucion','89','Julian','Morales','Gomez'),
+('SrBillete','contraseña','MX8324019651783256018237','FerGoRa@hotmail.com',68000,'Las flores','Orquideas','143','Fernando','Gonzales','Ramirez'),
+('Carterallena','contraseña','MX0192834017328687617842','ViceFerP@gmail.com',68000,'Las flores','Huertas','98','Vicente','Fernandez','Pinacho'),
+('Coins21','contraseña','MX4123891723512783468287','LuisRHz@gmail.com',68000,'Reforma','Independencia','45','Luis','Ramirez','Hernandez'),
+('Vengaelmoney','contraseña','MX4298512307682317651238','CarlitosJR@gmail.com',68000,'Reforma','Madero','35','Carlos','Jimenez','Rueda'),
+('Carteravacia','contraseña','MX3091283487123658721687','LunaJeGa@gmail.com',68000,'Reforma','Madero','254','Jesus','Gabriel','Luna'),
+('Apostador12','contraseña','MX8790861327851903651872','RichGato@gmail.com',68000,'Reforma','Revolucion','53','Ricardo','Garcia','Toledo'),
+('Desconocido32','contraseña','MX7901723984612938756918','Rammontes@gmail.com',68000,'Las flores','Gladiolas','12','Ramses','Montes','Alvarado'),
+('richircon','contraseña','MX0192428971364981273623','MauMar@hotmail.com',68000,'Las flores','Orquideas','62','Mauricio','Martinez','Guijon'),
+('Racha','contraseña','MX9451978450817465081743','MauHer@hotmail.com',68000,'Las flores','Orquideas','39','Mauricio','Hernandez','Perez'),
+('MarioBros','contraseña','MX9341023740923412630144','MauFar@hotmail.com',68000,'Las flores','Orquideas','21','Mario','Farfan','Santiago');
+select * from scautodromo.cliente;
+
+INSERT INTO scautodromo.resultados(id_carrera,noLicencia,posicion,tiempo) VALUES
+(45562466,34085362,2,'01:13:21.56'),
+(45562466,34138366,5,'01:25:12.45'),
+(45562466,34876493,1,'01:05:13.43'),
+(45562466,34047957,4,'01:23:53.32');
+
+
+INSERT INTO scautodromo.resultados(id_carrera,noLicencia) VALUES
+(45908629,34597307),
+(45908629,34085937),
+(45908629,34897403),
+(45908629,34625642),
+(45908629,34291818);
+
+
+INSERT INTO scautodromo.apuesta(nombre_usuario, id_carrera, noLicencia, monto ,importe) VALUES
+/*
+--('Suertudo03',45562466,34085362,200,864),
+--('Imrich',45562466,34138366,300,112);
+('Onemore',45562466,34876493,100,305),
+('Maquinadefuego',45562466,34047957,100,305),
+('MoneyMoney',45562466,34541341,100,305),
+('Gambito33',45562466,34725281,110,400);
+('ReyTroll',45562466,34935673,120,356)
+('Tacañin',45562466,34937031,130,350),
+('MoniMoni',45562466,34138366,115,320),
+('Coinsforme',45562466,34876493,95,250),
+('SrBillete',45562466,34541341,120,340);*/
+('MoniMoni',45908629,34597307,100,300),
+('Carterallena',45908629,34085937,150,400),
+('Coins21',45908629,34625642,260,950),
+('Vengaelmoney',45908629,34897403,130,390),
+('Carteravacia',45908629,34625642,180,420),
+('Apostador12',45908629,34291818,100,300);
+select * from scautodromo.apuesta;
+
+INSERT INTO scautodromo.telefono_cliente (nombre_usuario,telefono) VALUES
+('Suertudo03','9515342523'),
+('Imrich','9516424725'),
+('Onemore','9513134232'),
+('Maquinadefuego','9515436289'),
+('MoneyMoney','9514869546'),
+('Gambito33','9515436289'),
+('ReyTroll','9512345827'),
+('Tacañin','9518912962'),
+('MoniMoni','9515674687'),
+('Coinsforme','9514654128'),
+('SrBillete','9518497034'),
+('MoniMoni','9514362458'),
+('Carterallena','9514254867'),
+('Coins21','9517397820'),
+('Vengaelmoney','9515262591'),
+('Carteravacia','9510934543'),
+('Apostador12','9511234913'),
+('richircon','9511283419'),
+('Tacañin','9519863423'),
+('MoneyMoney','9510917239');
+select * from scautodromo.telefono_cliente;
