@@ -71,7 +71,12 @@ inherit;
 grant usage on schema scautodromo to cliente;
 
 grant insert on table scautodromo.apuesta to cliente;
-grant select on table scautodromo.auesta to cliente;
+grant select on table scautodromo.apuesta to cliente;
+--Estas dependen si se va a ingresar al servidor como cliente
+grant select on scautodromo.apuesta_piloto to cliente;
+grant execute on function scautodromo.total_piloto(varchar, int) to cliente;
+grant execute on function scautodromo.historial_apuestas(varchar) to cliente;
+grant execute on function scautodromo.ganador(varchar,varchar,int) to cliente;
 
 create user cliente_generico --no lleva contraseña o si?
 nosuperuser
