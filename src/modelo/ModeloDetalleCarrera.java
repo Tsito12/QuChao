@@ -179,4 +179,30 @@ public class ModeloDetalleCarrera {
         }
         return pilotoEncontrado;
     }
+
+    public Integer cantidadApostada(Piloto piloto, Carrera carrera)
+    {
+        //Objeto para ejecutar los procedimientos almacenados en la base de datos
+        PreparedStatement ps;
+        //Objeto para recoger los datos devueltos por el procedimiento almacenado
+        ResultSet rs;
+        String apodo = piloto.getapodo();
+        int ca = carrera.getIdcarrera();
+        String consulta ="select * from scautodromo.total_piloto('"+apodo+"',"+ca+");";
+        Integer total = null;
+        try
+        {
+            ps=getConexion().prepareStatement(consulta);
+            rs=ps.executeQuery();
+            if(rs.next())
+            {
+                total=rs.getInt(1);
+            }
+        }catch (SQLException e)
+        {
+            System.err.println("Error al buscar el total de apuestas para un piloto "+e);
+        }
+        return total;
+
+    }
 }

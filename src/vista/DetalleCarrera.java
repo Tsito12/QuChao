@@ -19,6 +19,7 @@ public class DetalleCarrera extends JFrame {
     //Etiquetas
     private JLabel lbltitulo;
     private JLabel lblnombreTabla;
+    private JLabel lblCantidadApostada;
 
     //Botones
     private JButton btnHistorial;
@@ -87,10 +88,22 @@ public class DetalleCarrera extends JFrame {
         constraints.fill=GridBagConstraints.BOTH;
         contenedor.add(scroll,constraints);
 
+        lblCantidadApostada = new JLabel();
+        constraints.gridx=1;
+        constraints.gridy=3;
+        constraints.gridheight=1;
+        constraints.gridwidth=1;
+        constraints.weightx=0.0;
+        constraints.weighty=0.0;
+        constraints.insets = new Insets(0,0,0,0);
+        constraints.fill=GridBagConstraints.NONE;
+        contenedor.add(lblCantidadApostada,constraints);
+
+
         //Botones
         btnHistorial = new JButton("Historial");
         constraints.gridx=1;
-        constraints.gridy=3;
+        constraints.gridy=4;
         constraints.gridheight=1;
         constraints.gridwidth=1;
         constraints.weightx=1.0;
@@ -101,7 +114,7 @@ public class DetalleCarrera extends JFrame {
 
         btnApostar=new JButton("Apostar");
         constraints.gridx=2;
-        constraints.gridy=3;
+        constraints.gridy=4;
         constraints.gridheight=1;
         constraints.gridwidth=1;
         constraints.weightx=1.0;
@@ -111,13 +124,18 @@ public class DetalleCarrera extends JFrame {
 
         btnRegresar = new JButton("Regresar");
         constraints.gridx=0;
-        constraints.gridy=3;
+        constraints.gridy=4;
         contenedor.add(btnRegresar,constraints);
-        pack();
+        //pack();
+        setBounds(100, 100,650,650);
     }
 
     public Carrera getCarrera() {
         return carrera;
+    }
+
+    public JLabel getLblCantidadApostada() {
+        return lblCantidadApostada;
     }
 
     public void conectaControlador(ControladorDetalleCarrera c)
@@ -128,6 +146,7 @@ public class DetalleCarrera extends JFrame {
         btnHistorial.addActionListener(c);
         btnApostar.setActionCommand("Apostar");
         btnApostar.addActionListener(c);
+        tabla.addMouseListener(c);
     }
 
 }
