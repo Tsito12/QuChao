@@ -25,7 +25,7 @@ nocreatedb
 nocreaterole
 inherit
 login;
-grant admin_apuestas to admin_apuestas_pedro;
+grant admin_apuestas to admin_apuestas_juan;
 ----------------------------------------------------------------------------
 create role admin_pilotos
 nosuperuser

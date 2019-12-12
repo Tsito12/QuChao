@@ -118,7 +118,6 @@ public class VistaRegistro extends JFrame{
         //txt Confirmar contraseña
         txtconfirmpass       = new JPasswordField();
         txtconfirmpass.setToolTipText("Confirme su Contraseña");
-        
         contenedor.add(txtconfirmpass);
         sp.putConstraint(SpringLayout.NORTH, txtconfirmpass, 110,
                         SpringLayout.NORTH, contenedor);
