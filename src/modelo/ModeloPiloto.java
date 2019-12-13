@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class ModeloPiloto {
     private String  host     = "localhost";
     private String  usuario     = "postgres";
-    private String  clave       = "admin";
+    private String  clave       = "0987654321";
     private int     puerto      = 5432;
     private String  servidor    = "";
     private String  baseDatos;
@@ -158,5 +158,27 @@ public class ModeloPiloto {
             System.err.println("Error en la busqueda de ploto desde la carrera "+e.getStackTrace());
         }
         return pilotos;
+    }
+
+    public void insertarPiloto(Piloto piloto)
+    {
+        PreparedStatement ps;
+        String numLicencia = piloto.getnum_licencia();
+        String nombre = piloto.getnombre();
+        String apellido1 = piloto.getapellidoP();
+        String apellido2 = piloto.getapellidoM();
+        String apodo = piloto.getapodo();
+        String sqlInsertApuesta = "insert into scautodromo.piloto values("+numLicencia+",'"+nombre+"','"
+                +apellido1+"','"+apellido2+"','"+apodo+"');";
+        try{
+            //Preparar la llamada
+            ps  = getConexion().prepareStatement(sqlInsertApuesta);
+            //Ejecutar el comando insert
+            ps.executeUpdate();
+        }
+        catch (SQLException e)
+        {
+            System.err.println("Error en la insersion de un piloto "+e);
+        }
     }
 }

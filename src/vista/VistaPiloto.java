@@ -5,12 +5,11 @@
  */
 package vista;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.SpringLayout;
+import controlador.ControladorPiloto;
+import modelo.ModeloPiloto;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -26,7 +25,7 @@ public class VistaPiloto extends JFrame{
     private JLabel lblapellido1;
     private JLabel lblapellido2;
     private JLabel lblapodo;
-    private JLabel lblnum_seguro;
+    private JLabel lblnum_seguro;//xd ya no se ocupo ese pedo
     
     //Cuadros de texto
     private JTextField txtnum_licencia;
@@ -39,6 +38,13 @@ public class VistaPiloto extends JFrame{
     //Botones
     private JButton bntregistrar;
     private JButton btnExit;
+
+    //Tabla
+    public JTable tabla;
+    public DefaultTableModel dtm;
+    private JScrollPane scroll;
+    protected String [] cabecera;
+    protected Object [][] datos;
     public VistaPiloto(){
         //Métodos de la JFrame
         setBounds(300, 300, 550, 350);//Definir las dimensiones de la ventana
@@ -125,11 +131,37 @@ public class VistaPiloto extends JFrame{
         contenedor.add(txtapellido2);
         sp.putConstraint(SpringLayout.NORTH, txtapellido2, 160,
                         SpringLayout.NORTH, contenedor);
-        sp.putConstraint(SpringLayout.WEST, txtapellido2, 320,
-                        SpringLayout.WEST, contenedor);
-        sp.putConstraint(SpringLayout.WEST, txtapellido2, 200,
-                        SpringLayout.WEST, contenedor);
-        
+        sp.putConstraint(SpringLayout.WEST, txtapellido2, 225,
+                        SpringLayout.WEST, txtapellido1);
+        sp.putConstraint(SpringLayout.EAST, txtapellido2, -100,
+                        SpringLayout.EAST, contenedor);
+
+        lblapodo = new JLabel("Apodo");
+        contenedor.add(lblapodo);
+        sp.putConstraint(SpringLayout.NORTH, lblapodo, 25,
+                SpringLayout.NORTH, txtapellido1);
+        sp.putConstraint(SpringLayout.WEST, lblapodo,  5,
+                SpringLayout.WEST, contenedor);
+
+        txtapodo = new JTextField();
+        contenedor.add(txtapodo);
+        sp.putConstraint(SpringLayout.NORTH,txtapodo,25,SpringLayout.NORTH,lblapodo);
+        sp.putConstraint(SpringLayout.WEST,txtapodo,5,SpringLayout.WEST,contenedor);
+        sp.putConstraint(SpringLayout.EAST, txtapodo, 200,
+                SpringLayout.WEST, contenedor);
+
+        scroll      = new JScrollPane();
+        cabecera    = new String[] {"Numero de Licencia","Nombre","Apellido Paterno","Apellido Materno","Apodo"};
+        dtm         = new DefaultTableModel(datos,cabecera);
+        tabla       = new JTable(dtm);
+        scroll.setViewportView(tabla);
+
+        contenedor.add(scroll);
+        sp.putConstraint(SpringLayout.NORTH,scroll,30,SpringLayout.NORTH,txtapodo);
+        sp.putConstraint(SpringLayout.WEST,scroll,10,SpringLayout.WEST,contenedor);
+        sp.putConstraint(SpringLayout.EAST,scroll,-10,SpringLayout.EAST,contenedor);
+        sp.putConstraint(SpringLayout.SOUTH, scroll, -40,
+                SpringLayout.SOUTH, contenedor);//colocarlo
         
         //Boton registrar
         bntregistrar          = new JButton("Registrar");
@@ -170,8 +202,19 @@ public class VistaPiloto extends JFrame{
     public String getnumseguro(){
         return txtnum_seguro.getText();
     }
+
+    public void conectarControlador(ControladorPiloto c)
+    {
+        bntregistrar.setActionCommand("REGISTRAR");
+        bntregistrar.addActionListener(c);
+        btnExit.setActionCommand("SALIR");
+        btnExit.addActionListener(c);
+    }
     
     public static void main (String [] args){
         VistaPiloto vp = new VistaPiloto();
+        ModeloPiloto modelo = new ModeloPiloto("dbautodromo");
+        ControladorPiloto controlador = new ControladorPiloto(vp,modelo);
+        vp.conectarControlador(controlador);
     } 
 }
