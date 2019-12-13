@@ -123,26 +123,72 @@ INSERT INTO scautodromo.resultados(id_carrera,noLicencia) VALUES (45908629,34746
 INSERT INTO scautodromo.resultados(id_carrera,noLicencia) VALUES (45908629,34976403);
 
 --trigger que no deja apostar valores menores a 10 ni 10 minutos antes de la carrera
+
+create or replace function calcula_importe(nombre_usuario character varying,id_carrera integer,nolicencia integer,monto integer) returns numeric as
+$$
+declare
+	nombreu alias for $1;
+	idcarrera alias for $2;
+	nlicencia alias for $3;
+	montoapuesta alias for $4;
+	montocarrera numeric;
+	montocarreraaux numeric;
+	montopiloto numeric;
+	montopilotoaux numeric;
+	importe numeric;
+begin
+	if exists (select bolsa_a_repartir from info_apuestas where info_apuestas.id_carrera = idcarrera ) then
+		montocarreraaux = (select bolsa_a_repartir from info_apuestas where info_apuestas.id_carrera = idcarrera);
+	else
+		montocarreraaux = 0.0;
+	end if;
+	if exists (select total_piloto from apuesta_piloto where apuesta_piloto.nolicencia = nlicencia )then
+		montopilotoaux = (select total_piloto from apuesta_piloto where apuesta_piloto.nolicencia = nlicencia);
+	else
+		montopilotoaux = 0.0;
+	end if;
+	montocarrera = montocarreraaux + montoapuesta*0.8;
+	montopiloto = montopilotoaux + montoapuesta;
+	importe = (montocarrera/montopiloto) * montoapuesta;
+	if(importe <= montoapuesta) then
+		importe = montoapuesta * 1.05;
+	end if;
+	return importe;
+end
+$$
+language plpgsql;
+
+
 create or replace function limitet_apuesta() returns trigger as
 $$
 declare
 	fechac date;
 	horac time;
+	regis apuesta%rowtype;
 begin
-	if(new.monto>=10) then
-		fechac = (select fecha from scautodromo.carrera where id_carrera = new.id_carrera);
-		horac = (select hora from scautodromo.carrera where id_carrera = new.id_carrera);
+	regis = new;
+	if(regis.monto>=10) then
+		fechac = (select fecha from carrera where id_carrera = new.id_carrera);
+		horac = (select hora from carrera where id_carrera = new.id_carrera);
 		if(current_date<=fechac) then
-		    if(current_date=fechac) then
-			    if (horac -(now()::time))>interval '10 minute' then
-				    new.fecha = current_date;
-				    return new;
-			    else
-				    raise exception 'Apuestas cerradas';
-			    end if;
+			if(current_date=fechac) then 
+				if (horac -(now()::time))>interval '10 minute' then
+					regis.fecha = current_date;
+					regis.importe = (select * from calcula_importe(regis.nombre_usuario,regis.id_carrera,regis.nolicencia,regis.monto));
+					update apuesta set importe = (select * from 
+								calcula_importe(apuesta.nombre_usuario,apuesta.id_carrera,apuesta.nolicencia,apuesta.monto)) where
+								apuesta.id_carrera = regis.id_carrera;
+					return regis;
+				else
+					raise exception 'Apuestas cerradas';
+				end if;
 			else
-			    new.fecha=current_date;
-			    return new;
+					regis.fecha = current_date;
+					regis.importe = (select * from calcula_importe(regis.nombre_usuario,regis.id_carrera,regis.nolicencia,regis.monto));
+					update apuesta set importe = (select * from 
+								calcula_importe(apuesta.nombre_usuario,apuesta.id_carrera,apuesta.nolicencia,apuesta.monto)) where
+								apuesta.id_carrera = regis.id_carrera;
+				return regis;
 			end if;
 		else
 			raise exception 'La carrera ya se ha realizado, no puedes apostar';
@@ -150,17 +196,19 @@ begin
 	else
 		raise exception 'No se pueden hacer apuestas menores a 10 pesos';
 		end if;
-	return null;
 end
 $$
 language plpgsql;
---drop trigger trigger_limitea on resultados;
-create trigger trigger_limitea before insert 
-on apuesta for each row execute procedure scautodromo.limitet_apuesta();
 
-update carrera set fecha = '2019-12-12',hora = '12:37:00' where id_carrera=45908629;
-INSERT INTO scautodromo.apuesta(nombre_usuario, id_carrera, noLicencia, monto,importe) VALUES('Suertudo03',45908629,34597307,200,864);
-INSERT INTO scautodromo.apuesta(nombre_usuario, id_carrera, noLicencia, monto,importe) VALUES ('Imrich',45908629,34085937,300,112);
+create trigger trigger_limitea before insert 
+on apuesta for each row execute procedure limitet_apuesta();
+
+update carrera set fecha = '2019-12-13' where id_carrera = 45908629;
+INSERT INTO scautodromo.apuesta(nombre_usuario, id_carrera, noLicencia, monto) VALUES
+('Suertudo03',45908629,34597307,200),
+('Imrich',45908629,34085937,300),
+('Onemore',45908629,34897403,100);
+
 
 -- Ya no se me ocurrieron mas triggers xDxD
 -- No permite ingresar carreras cuya fecha sea menor a la actual
