@@ -92,19 +92,19 @@ select id_carrera,apodo,tiempo from scautodromo.resultados natural join scautodr
 create or replace function agregar_piloto() returns trigger as
 $$
 declare
-	registro resultados%rowtype;
+	registro scautodromo.resultados%rowtype;
 	cupoc int;
 begin
 	registro = new;
-	if exists (select * from scautodromo.resultados where new.id_carrera = resultados.id_carrera) then
-		cupoc =	(select c.noparticipantes from carrera as c where c.id_carrera = new.id_carrera); 
+	if exists (select * from scautodromo.resultados where new.id_carrera = scautodromo.resultados.id_carrera) then
+		cupoc =	(select c.noparticipantes from scautodromo.carrera as c where c.id_carrera = new.id_carrera);
 			if(cupoc<7) then 
-				update scautodromo.carrera set noparticipantes = noparticipantes + 1 where carrera.id_carrera = registro.id_carrera;
+				update scautodromo.carrera set noparticipantes = noparticipantes + 1 where scautodromo.carrera.id_carrera = registro.id_carrera;
 			else
 				raise exception 'Carrera llena, no puedes ingresar mas pilotos';
 			end if;
 	else
-		update scautodromo.carrera set noparticipantes = noparticipantes + 1 where carrera.id_carrera = registro.id_carrera;
+		update scautodromo.carrera set noparticipantes = noparticipantes + 1 where scautodromo.carrera.id_carrera = registro.id_carrera;
 	end if;
 	return registro;
 end
@@ -137,13 +137,13 @@ declare
 	montopilotoaux numeric;
 	importe numeric;
 begin
-	if exists (select bolsa_a_repartir from info_apuestas where info_apuestas.id_carrera = idcarrera ) then
-		montocarreraaux = (select bolsa_a_repartir from info_apuestas where info_apuestas.id_carrera = idcarrera);
+	if exists (select bolsa_a_repartir from scautodromo.info_apuestas where info_apuestas.id_carrera = idcarrera ) then
+		montocarreraaux = (select bolsa_a_repartir from scautodromo.info_apuestas where info_apuestas.id_carrera = idcarrera);
 	else
 		montocarreraaux = 0.0;
 	end if;
-	if exists (select total_piloto from apuesta_piloto where apuesta_piloto.nolicencia = nlicencia )then
-		montopilotoaux = (select total_piloto from apuesta_piloto where apuesta_piloto.nolicencia = nlicencia);
+	if exists (select total_piloto from scautodromo.apuesta_piloto where scautodromo.apuesta_piloto.nolicencia = nlicencia )then
+		montopilotoaux = (select total_piloto from scautodromo.apuesta_piloto where apuesta_piloto.nolicencia = nlicencia);
 	else
 		montopilotoaux = 0.0;
 	end if;
@@ -168,16 +168,16 @@ declare
 begin
 	regis = new;
 	if(regis.monto>=10) then
-		fechac = (select fecha from carrera where id_carrera = new.id_carrera);
-		horac = (select hora from carrera where id_carrera = new.id_carrera);
+		fechac = (select fecha from scautodromo.carrera where id_carrera = new.id_carrera);
+		horac = (select hora from scautodromo.carrera where id_carrera = new.id_carrera);
 		if(current_date<=fechac) then
 			if(current_date=fechac) then 
 				if (horac -(now()::time))>interval '10 minute' then
 					regis.fecha = current_date;
-					regis.importe = (select * from calcula_importe(regis.nombre_usuario,regis.id_carrera,regis.nolicencia,regis.monto));
+					regis.importe = (select * from scautodromo.calcula_importe(regis.nombre_usuario,regis.id_carrera,regis.nolicencia,regis.monto));
 					update apuesta set importe = (select * from 
-								calcula_importe(apuesta.nombre_usuario,apuesta.id_carrera,apuesta.nolicencia,apuesta.monto)) where
-								apuesta.id_carrera = regis.id_carrera;
+								scautodromo.calcula_importe(apuesta.nombre_usuario,apuesta.id_carrera,apuesta.nolicencia,apuesta.monto)) where
+								scautodromo.apuesta.id_carrera = regis.id_carrera;
 					return regis;
 				else
 					raise exception 'Apuestas cerradas';

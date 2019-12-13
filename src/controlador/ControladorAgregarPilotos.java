@@ -2,12 +2,15 @@ package controlador;
 
 import modelo.Carrera;
 import modelo.ModeloAgregarPilotos;
+import modelo.Piloto;
 import vista.VistaAgregarPilotos;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.List;
 
 public class ControladorAgregarPilotos implements ActionListener, MouseListener {
     private VistaAgregarPilotos view;
@@ -16,6 +19,7 @@ public class ControladorAgregarPilotos implements ActionListener, MouseListener 
     public ControladorAgregarPilotos (VistaAgregarPilotos view, ModeloAgregarPilotos modelo){
         this.view = view;
         this.modelo = modelo;
+        llenarCombo();
     }
 
     public void actionPerformed(ActionEvent arg0) {
@@ -33,15 +37,24 @@ public class ControladorAgregarPilotos implements ActionListener, MouseListener 
         switch (comando) {
             case "INSERTAR":
                 modelo.login(view.getuser(),view.getpass());
-                modelo.insertPiloto(view.piloto());
+                modelo.insertPiloto(view.piloto(),this.view.carrera.getIdcarrera());
                 this.modelo.closeConexion();
-                this.view.dispose();
+
                 break;
 
 
             default:
                 System.err.println("Comando no definido");
                 break;
+        }
+    }
+
+    public void llenarCombo()
+    {
+        List<Piloto> pilotos = modelo.listarPilotos();
+        for (int i = 0; i<pilotos.size();i++)
+        {
+            this.view.getPilotos().addItem(pilotos.get(i).getapodo());
         }
     }
 

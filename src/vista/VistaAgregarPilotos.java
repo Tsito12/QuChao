@@ -1,6 +1,7 @@
 package vista;
 
 import controlador.ControladorAgregarPilotos;
+import modelo.Carrera;
 
 import javax.swing.*;
 
@@ -12,8 +13,10 @@ public class VistaAgregarPilotos extends JFrame {
     private JPanel contenedor;
     private String user;
     private String pass;
+    public Carrera carrera;
 
-    public VistaAgregarPilotos(){
+    public VistaAgregarPilotos(Carrera c){
+        this.carrera = c;
         //Métodos de la JFrame
         setBounds(300, 300, 550, 550);//Definir las dimensiones de la ventana
         setTitle("AUTÓDROMO QU CHAO");    //Barra de título

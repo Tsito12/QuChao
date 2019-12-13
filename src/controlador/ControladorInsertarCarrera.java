@@ -39,13 +39,14 @@ public class ControladorInsertarCarrera implements ActionListener, MouseListener
                 modelo.login(view.getuser(),view.getpass());
                 e = new Carrera(view.getid(),view.getNoparticipantes(), view.getFecha(),view.getnoVueltas(),view.getHora());
                 modelo.insertCarrera(e);
-                VistaAgregarPilotos vista = new VistaAgregarPilotos();
+                VistaAgregarPilotos vista = new VistaAgregarPilotos(e);
                 vista.setPass(view.getpass());
                 vista.setUser(view.getuser());
                 ModeloAgregarPilotos ma = new ModeloAgregarPilotos("dbautodromo");
+                ma.login(view.getuser(),view.getpass());
                 ControladorAgregarPilotos ca = new ControladorAgregarPilotos(vista, ma);
                 vista.conectaControlador(ca);
-                ma.llenarpilotos(vista.getPilotos());
+                //ma.llenarpilotos(vista.getPilotos());
                 this.modelo.closeConexion();
                 this.view.dispose();
                 break;
