@@ -63,7 +63,7 @@ public class ControladorPiloto implements ActionListener, MouseListener{
         //  indicados en setActionCommand invocado en la
         //  clase VistaBiblioteca
         switch (comando) {
-            case "INSERTAR":
+            case "REGISTRAR":
                 String numLicencia = this.view.getnum_licencia();
                 String nombre = this.view.getnombre();
                 String apellido1 = this.view.getApellido1();
@@ -83,11 +83,57 @@ public class ControladorPiloto implements ActionListener, MouseListener{
                 modelo.closeConexion();
                 this.view.dispose();
             break;
-			
+
+            case "EDITAR":
+                int filaPulsada = this.view.tabla.getSelectedRow();
+                //Si se ha pulsado una fila
+                if(filaPulsada>=0)
+                {
+                     numLicencia = this.view.getnum_licencia();
+                     nombre = this.view.getnombre();
+                     apellido1 = this.view.getApellido1();
+                     apellido2 = this.view.getApellido2();
+                     aapodo = this.view.getapodo();
+                    e = new Piloto();
+                    e.setnum_licencia(numLicencia);
+                    e.setnombre(nombre);
+                    e.setapellidoP(apellido1);
+                    e.setapellidoM(apellido2);
+                    e.setapodo(aapodo);
+                    modelo.updatePiloto(e);
+                    cargarTabla();
+                }
+			break;
+            case "ELIMINAR":
+                filaPulsada = this.view.tabla.getSelectedRow();
+                //Si se ha pulsado una fila
+                if(filaPulsada>=0){
+                    //Se recoge el id de la fila marcada
+                    //int identificador   = (int)this.view.dtm.getValueAt(filaPulsada, 0);
+                    e = new Piloto();
+                    String num_Licencia = (String) this.view.dtm.getValueAt(filaPulsada,0);
+                    e.setnum_licencia(num_Licencia);
+                    modelo.deletePiloto(e);
+                }
+                break;
             default:
                 System.err.println("Comando no definido");
             break;
         }
+        //limpiar el formulario
+        limpiar();
+
+        //refrescar la tabla
+        cargarTabla();
+    }
+
+    public void limpiar()
+    {
+        this.view.setTxtapodo("");
+        this.view.setTxtnum_licencia("");
+        this.view.setTxtnombre("");
+        this.view.setTxtapellido1("");
+        this.view.setTxtapellido2("");
     }
     
     @Override
@@ -101,6 +147,25 @@ public class ControladorPiloto implements ActionListener, MouseListener{
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        
+
+        //Recoger qué fila se ha pulsadao en la tabla
+        int filaPulsada = this.view.tabla.getSelectedRow();
+        //Si se ha pulsado una fila
+        if(filaPulsada>=0) {
+            //Se recoge el id de la fila marcada
+            Piloto p = new Piloto();
+            String numLicencia = (String) this.view.dtm.getValueAt(filaPulsada, 0);
+
+            p.setnum_licencia(numLicencia);
+            Piloto p2 = modelo.selectPiloto(p);
+            if (p2 != null) {
+
+                this.view.setTxtnum_licencia(p2.getnum_licencia());
+                this.view.setTxtnombre(p2.getnombre());
+                this.view.setTxtapellido1(p2.getapellidoP());
+                this.view.setTxtapellido2(p2.getapellidoM());
+                this.view.setTxtapodo(p2.getapodo());
+            }
+        }
     }
 }

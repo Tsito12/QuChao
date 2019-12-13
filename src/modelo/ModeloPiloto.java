@@ -72,20 +72,20 @@ public class ModeloPiloto {
         //Objeto para recoger los datos devueltos por el procedimiento almacenado
         ResultSet rs;
         Piloto pilotoEncontrado = null;
-
-        String consulta ="select nombre, apellidoP, apellidoM, apodo from scautodromo.piloto where noLicencia = ?;";
+        System.out.println(p.getnum_licencia());
+        String consulta ="select nolicencia, nombre, apellidoP, apellidoM, apodo from scautodromo.piloto where noLicencia = ?;";
         try
         {
             ps = getConexion().prepareStatement(consulta);
-            ps.setString(1,p.getnum_licencia());
+            ps.setInt(1,Integer.parseInt(p.getnum_licencia()));
             rs = ps.executeQuery();
             if(rs.next())
             {
-                pilotoEncontrado = new Piloto(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5));
+                pilotoEncontrado = new Piloto(Integer.toString(rs.getInt(1)),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5));
             }
         }catch (SQLException ex)
         {
-            System.err.println("Error en la consulta"+ ex.getStackTrace());
+            System.err.println("Error en la consulta"+ ex);
         }
         return pilotoEncontrado;
     }
@@ -133,11 +133,11 @@ public class ModeloPiloto {
         //Objeto para recorrer el resultado del procedimiento almacenado y
         //  añadirlo a la tabla definida en la clase View
         List<Piloto> pilotos = new ArrayList<Piloto>();
-        String consultaSQL ="select nombre, apellidoP, apellidoM, apodo from scautodromo.piloto where noLicencia in (select noLicencia from resultados where id_carrera = ?;";
+        String consultaSQL ="select nombre, apellidoP, apellidoM, apodo from scautodromo.piloto where noLicencia in (select noLicencia from scautodromo.resultados where id_carrera = ?);";
         try {
             //Preparar la llamada
             ps  = getConexion().prepareStatement(consultaSQL);
-            ps.setString(1,c.getnum_licencia());
+            ps.setInt(1,Integer.parseInt(c.getnum_licencia()));
             //Ejecutarla y recoger el resultado
             rs  = ps.executeQuery();
 
@@ -179,6 +179,48 @@ public class ModeloPiloto {
         catch (SQLException e)
         {
             System.err.println("Error en la insersion de un piloto "+e);
+        }
+    }
+
+    public void updatePiloto(Piloto piloto)
+    {
+        PreparedStatement ps;
+        String numLicencia = piloto.getnum_licencia();
+        String nombre = piloto.getnombre();
+        String apellido1 = piloto.getapellidoP();
+        String apellido2 = piloto.getapellidoM();
+        String apodo = piloto.getapodo();
+        String sqlInsertApuesta = "update scautodromo.piloto set nombre='"+nombre+"',apellidop='"
+                +apellido1+"',apellidom='"+apellido2+"',apodo='"+apodo+"'where nolicencia="+numLicencia+";";
+        try{
+            //Preparar la llamada
+            ps  = getConexion().prepareStatement(sqlInsertApuesta);
+            //Ejecutar el comando insert
+            ps.executeUpdate();
+        }
+        catch (SQLException e)
+        {
+            System.err.println("Error en el update de un piloto "+e);
+        }
+    }
+
+    public boolean deletePiloto(Piloto p){
+        //Objeto para ejecutar los procedimientos almacenados en la base de datos
+        PreparedStatement ps;
+        String sqlDeleteEstudiante = "delete from scautodromo.piloto where nolicencia = ?;";
+        try{
+            //Preparar la llamada
+            ps  = getConexion().prepareStatement(sqlDeleteEstudiante);
+
+            //Indicar qué información se pasa al Statement
+            ps.setInt(1, Integer.parseInt(p.getnum_licencia()));
+            //Ejecutar el procedimiento
+            ps.executeUpdate();
+            //System.out.println(this.view.dtm.getValueAt(filaPulsada, 0));
+            return true;
+        }catch (SQLException exception) {
+            System.err.println("Error en el BORRADO "+ exception);
+            return false;
         }
     }
 }

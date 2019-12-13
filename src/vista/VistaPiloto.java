@@ -37,7 +37,9 @@ public class VistaPiloto extends JFrame{
     
     //Botones
     private JButton bntregistrar;
+    private JButton btnEditar;
     private JButton btnExit;
+    private JButton btnEliminar;
 
     //Tabla
     public JTable tabla;
@@ -170,13 +172,29 @@ public class VistaPiloto extends JFrame{
                         SpringLayout.SOUTH, contenedor);//colocarlo
         sp.putConstraint(SpringLayout.WEST, bntregistrar,   35,
                         SpringLayout.WEST, contenedor);
+
+        //boton editar
+        btnEditar = new JButton("Editar");
+        contenedor.add(btnEditar);
+        sp.putConstraint(SpringLayout.SOUTH, btnEditar, -10,
+                SpringLayout.SOUTH, contenedor);//colocarlo
+        sp.putConstraint(SpringLayout.WEST, btnEditar,   200,
+                SpringLayout.WEST, contenedor);
+
+        //boton eliminar
+        btnEliminar = new JButton("Eliminar");
+        contenedor.add(btnEliminar);
+        sp.putConstraint(SpringLayout.SOUTH, btnEliminar, -10,
+                SpringLayout.SOUTH, contenedor);//colocarlo
+        sp.putConstraint(SpringLayout.WEST, btnEliminar,   300,
+                SpringLayout.WEST, contenedor);
         
         //BOTÓN SALIR
 	btnExit			= new JButton("Salir");
 	contenedor.add(btnExit);
 	sp.putConstraint(SpringLayout.SOUTH, btnExit, -10,
 	SpringLayout.SOUTH, contenedor);
-	sp.putConstraint(SpringLayout.WEST, btnExit, 355,
+	sp.putConstraint(SpringLayout.WEST, btnExit, 500,
 	SpringLayout.WEST,contenedor);//
         
         setVisible(true);
@@ -203,12 +221,38 @@ public class VistaPiloto extends JFrame{
         return txtnum_seguro.getText();
     }
 
+
+    public void setTxtnum_licencia(String txtnum_licencia) {
+        this.txtnum_licencia.setText(txtnum_licencia);
+    }
+
+    public void setTxtnombre(String txtnombre) {
+        this.txtnombre.setText(txtnombre);
+    }
+
+    public void setTxtapellido1(String txtapellido1) {
+        this.txtapellido1.setText(txtapellido1);
+    }
+
+    public void setTxtapellido2(String txtapellido2) {
+        this.txtapellido2.setText(txtapellido2);
+    }
+
+    public void setTxtapodo(String txtapodo) {
+        this.txtapodo.setText(txtapodo);
+    }
+
     public void conectarControlador(ControladorPiloto c)
     {
         bntregistrar.setActionCommand("REGISTRAR");
         bntregistrar.addActionListener(c);
         btnExit.setActionCommand("SALIR");
         btnExit.addActionListener(c);
+        btnEditar.setActionCommand("EDITAR");
+        btnEditar.addActionListener(c);
+        tabla.addMouseListener(c);
+        btnEliminar.setActionCommand("ELIMINAR");
+        btnEliminar.addActionListener(c);
     }
     
     public static void main (String [] args){
