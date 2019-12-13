@@ -45,6 +45,7 @@ grant update on table scautodromo.piloto to admin_pilotos;
 grant delete on table scautodromo.piloto to admin_pilotos;
 grant select on table scautodromo.carrera to admin_pilotos;
 grant insert on table scautodromo.carrera to admin_pilotos;
+grant insert on table scautodromo.resultados to admin_pilotos;
 
 create user admin_pilotos_daniel password '1234'
 nosuperuser

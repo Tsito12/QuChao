@@ -31,7 +31,7 @@ public class VistaInsertarCarreras extends JFrame {
     private JTextField txthora;
 
     private JButton bntregistrar;
-    private JButton btnExit;
+    private JButton btnCarrerasProximas;
 
     public  VistaInsertarCarreras(){
         //Métodos de la JFrame
@@ -54,7 +54,7 @@ public class VistaInsertarCarreras extends JFrame {
         sp.putConstraint(SpringLayout.WEST, titulo,  5,
                 SpringLayout.WEST, contenedor);
 
-        lblusername = new JLabel("Elija un nombre de usuario: ");  //Crear el objeto
+        lblusername = new JLabel("Usuario: ");  //Crear el objeto
         contenedor.add(lblusername);      //Añadirlo al contenedor
         sp.putConstraint(SpringLayout.NORTH, lblusername, 40,
                 SpringLayout.NORTH, contenedor);
@@ -70,23 +70,22 @@ public class VistaInsertarCarreras extends JFrame {
         sp.putConstraint(SpringLayout.EAST, txtusername, 200,
                 SpringLayout.WEST, contenedor);
 
-        //Contraseña
-        lblpass = new JLabel("Elija una contraseña: ");  //Crear el objeto
+        lblpass = new JLabel("Contraseña: ");  //Crear el objeto
         contenedor.add(lblpass);      //Añadirlo al contenedor
-        sp.putConstraint(SpringLayout.NORTH, lblpass, 90,
+        sp.putConstraint(SpringLayout.NORTH, lblpass, 40,
                 SpringLayout.NORTH, contenedor);
-        sp.putConstraint(SpringLayout.WEST, lblpass,  5,
+        sp.putConstraint(SpringLayout.WEST, lblpass,  230,
                 SpringLayout.WEST, contenedor);
         //txt Contraseña
         txtpass       = new JPasswordField();
         txtpass.setToolTipText("Ingrese Contraseña");
         contenedor.add(txtpass);
-        sp.putConstraint(SpringLayout.NORTH, txtpass, 110,
+        sp.putConstraint(SpringLayout.NORTH, txtpass, 60,
                 SpringLayout.NORTH, contenedor);
-        sp.putConstraint(SpringLayout.WEST, txtpass, 5,
+        sp.putConstraint(SpringLayout.WEST, txtpass, 230,
                 SpringLayout.WEST, contenedor);
         sp.putConstraint(SpringLayout.EAST, txtpass, 200,
-                SpringLayout.WEST, contenedor);
+                SpringLayout.EAST, contenedor);
 
         lblidcarrera = new JLabel("Id de la carrera: ");
         contenedor.add(lblidcarrera);      //Añadirlo al contenedor
@@ -176,9 +175,15 @@ public class VistaInsertarCarreras extends JFrame {
         sp.putConstraint(SpringLayout.WEST, bntregistrar,   35,
                 SpringLayout.WEST, contenedor);
 
-        setBounds(100,100,300,175);
-        setVisible(true);
+        btnCarrerasProximas = new JButton("Carreras proximas");
+        contenedor.add(btnCarrerasProximas);
+        sp.putConstraint(SpringLayout.SOUTH, btnCarrerasProximas, -10,
+                SpringLayout.SOUTH, contenedor);//colocarlo
+        sp.putConstraint(SpringLayout.EAST, btnCarrerasProximas,   35,
+                SpringLayout.EAST, contenedor);
 
+        setBounds(300,300,500,400);
+        setVisible(true);
     }
 
 
@@ -199,5 +204,8 @@ public class VistaInsertarCarreras extends JFrame {
 
         bntregistrar.addActionListener(c);
         bntregistrar.setActionCommand("INSERTAR");
+
+        btnCarrerasProximas.addActionListener(c);
+        btnCarrerasProximas.setActionCommand("CARRERAS");
     }
 }

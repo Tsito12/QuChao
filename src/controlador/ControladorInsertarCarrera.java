@@ -1,6 +1,7 @@
 package controlador;
 
 import modelo.*;
+import vista.VistaAgregarPilotos;
 import vista.VistaInsertarCarreras;
 import vista.VistaProximasCarreras;
 import vista.VistaRegistro;
@@ -38,17 +39,24 @@ public class ControladorInsertarCarrera implements ActionListener, MouseListener
                 modelo.login(view.getuser(),view.getpass());
                 e = new Carrera(view.getid(),view.getNoparticipantes(), view.getFecha(),view.getnoVueltas(),view.getHora());
                 modelo.insertCarrera(e);
-                VistaProximasCarreras vistaProximasCarreras = new VistaProximasCarreras();
-                ModeloProximasCarreras modeloProximasCarreras = new ModeloProximasCarreras("dbautodromo");
-                ControladorProximasCarreras controladorProximasCarreras = new ControladorProximasCarreras(vistaProximasCarreras,modeloProximasCarreras);
-                vistaProximasCarreras.conectaControlador(controladorProximasCarreras);
+                VistaAgregarPilotos vista = new VistaAgregarPilotos();
+                vista.setPass(view.getpass());
+                vista.setUser(view.getuser());
+                ModeloAgregarPilotos ma = new ModeloAgregarPilotos("dbautodromo");
+                ControladorAgregarPilotos ca = new ControladorAgregarPilotos(vista, ma);
+                vista.conectaControlador(ca);
+                ma.llenarpilotos(vista.getPilotos());
                 this.modelo.closeConexion();
                 this.view.dispose();
                 break;
 
-            case "SALIR":
+            case "CARRERAS":
                 modelo.closeConexion();
                 this.view.dispose();
+                VistaProximasCarreras vistaProximasCarreras = new VistaProximasCarreras();
+                ModeloProximasCarreras modeloProximasCarreras = new ModeloProximasCarreras("dbautodromo");
+                ControladorProximasCarreras controladorProximasCarreras = new ControladorProximasCarreras(vistaProximasCarreras,modeloProximasCarreras);
+                vistaProximasCarreras.conectaControlador(controladorProximasCarreras);
                 break;
 
             default:
