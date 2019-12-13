@@ -58,17 +58,17 @@ public class ModeloInsertarCarreras {
     public boolean insertCarrera(Carrera e){
         //Objeto para ejecutar los procedimientos almacenados en la base de datos
         PreparedStatement ps;
-        String sqlInsertLibro = "insert into scautodromo.carrera values (?,?,?,?,?);";
+        String id = String.valueOf(e.getIdcarrera());
+        String participantes = String.valueOf(e.getNoParticpantes());
+        String fecha = e.getFecha();
+        String vueltas = String.valueOf(e.getNoVueltas());
+        String hora = e.getHora();
+
+        String sqlInsertCarrera = "insert into scautodromo.carrera values('"+id+"',"+participantes+","
+                +fecha+","+vueltas+",'"+hora+"');";
         try{
             //Preparar la llamada
-            ps  = getConexion().prepareStatement(sqlInsertLibro);
-            //Indicar qué información se pasa al Statement
-            ps.setInt(1, e.getIdcarrera());
-            ps.setInt(2, e.getNoParticpantes());
-            ps.setDate(3, e.getFechaf());
-            ps.setInt(4,e.getNoVueltas());
-            ps.setString(5, e.getHora());
-
+            ps  = getConexion().prepareStatement(sqlInsertCarrera);
             //Ejecutar el comando insert
             ps.executeUpdate();
             return true;

@@ -5,6 +5,8 @@ import controlador.ControladorInsertarCarrera;
 
 import javax.swing.*;
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 
 public class VistaInsertarCarreras extends JFrame {
@@ -126,6 +128,7 @@ public class VistaInsertarCarreras extends JFrame {
                 SpringLayout.WEST, contenedor);
 
         chdate = new JDateChooser();
+        chdate.setDateFormatString("yyyy-MM-dd");
         contenedor.add(chdate);
         sp.putConstraint(SpringLayout.NORTH, chdate, 210,
                 SpringLayout.NORTH, contenedor);
@@ -178,11 +181,16 @@ public class VistaInsertarCarreras extends JFrame {
 
     }
 
+
     public String getuser(){return txtusername.getText();}
     public String getpass(){return  txtpass.getText();}
     public int getid(){return Integer.parseInt(txtidcarrera.getText());}
     public int getNoparticipantes(){return Integer.parseInt(txtnoparticipantes.getText());}
-    public String getFecha(){return chdate.getDateFormatString();}
+    public String getFecha(){
+        java.util.Date  fecha=chdate.getDate();
+        DateFormat f=new SimpleDateFormat("yyyy-MM-dd");
+        String fecha2=f.format(fecha);
+        return fecha2;}
 
     public int getnoVueltas(){return Integer.parseInt(txtnovueltas.getText());}
     public String getHora(){return txthora.getText();}

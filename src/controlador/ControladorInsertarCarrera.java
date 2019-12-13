@@ -38,13 +38,12 @@ public class ControladorInsertarCarrera implements ActionListener, MouseListener
                 modelo.login(view.getuser(),view.getpass());
                 e = new Carrera(view.getid(),view.getNoparticipantes(), view.getFecha(),view.getnoVueltas(),view.getHora());
                 modelo.insertCarrera(e);
-                this.modelo.closeConexion();
-                this.view.dispose();
                 VistaProximasCarreras vistaProximasCarreras = new VistaProximasCarreras();
                 ModeloProximasCarreras modeloProximasCarreras = new ModeloProximasCarreras("dbautodromo");
                 ControladorProximasCarreras controladorProximasCarreras = new ControladorProximasCarreras(vistaProximasCarreras,modeloProximasCarreras);
                 vistaProximasCarreras.conectaControlador(controladorProximasCarreras);
-
+                this.modelo.closeConexion();
+                this.view.dispose();
                 break;
 
             case "SALIR":
