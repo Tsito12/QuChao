@@ -65,7 +65,7 @@ public class ModeloInsertarCarreras {
         String hora = e.getHora();
 
         String sqlInsertCarrera = "insert into scautodromo.carrera values('"+id+"',"+participantes+","
-                +fecha+","+vueltas+",'"+hora+"');";
+                +"'"+fecha+"'"+","+vueltas+",'"+hora+"');";
         try{
             //Preparar la llamada
             ps  = getConexion().prepareStatement(sqlInsertCarrera);

@@ -132,10 +132,14 @@ begin
 	if(new.monto>=10) then
 		fechac = (select fecha from scautodromo.carrera where id_carrera = new.id_carrera);
 		horac = (select hora from scautodromo.carrera where id_carrera = new.id_carrera);
-		if(current_date<=fechac) then 
-			if (horac -(now()::time))>interval '10 minute' then
-				new.fecha = current_date;
-				return new;
+		if(current_date<=fechac) then
+		    if(current_date=fechac) then
+			    if (horac -(now()::time))>interval '10 minute' then
+				    new.fecha = current_date;
+				    return new;
+			    else
+				    raise exception 'Apuestas cerradas';
+			    end if;
 			else
 			    new.fecha=current_date;
 			    return new;
