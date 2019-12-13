@@ -226,7 +226,7 @@ begin
 end
 $$
 language plpgsql;
---drop trigger trigger_elimap on resultados;
+--drop trigger trigger_addc  on resultados;
 create trigger trigger_addc before insert
 on carrera for each row execute procedure scautodromo.add_carrera();
 
